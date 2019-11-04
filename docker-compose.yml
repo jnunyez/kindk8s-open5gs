@@ -48,6 +48,7 @@ services:
       - webui
     environment:
       - DB_HOST=mongodb
+    container_name: "dbprovisioner"
     volumes:
       - "./provisioning/db/run_db.sh:/tmp/run.sh"
       - "./provisioning/db/imsi1.json:/tmp/imsi1.json"

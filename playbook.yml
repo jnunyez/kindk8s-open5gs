@@ -21,7 +21,11 @@
       var: output
   - assert:
       that:
-        - "epc.epc.state.running"
+        - "mme.mme.state.running"
+        - "pcrf.pcrf.state.running"
+        - "sgw.sgw.state.running"
+        - "pgw.pgw.state.running"
+        - "hss.hss.state.running"
         - "webui.webui.state.running"
         - "mongodb.mongodb.state.running"
-        - "dbprovisioner.dbprovisioner.state.running"
+        - "mongodbloader.dbprovisioner.state.running"
