@@ -26,6 +26,7 @@ services:
 
   webui:
     build: ./
+    restart: always
     depends_on:
       - mongodb
     environment:
@@ -45,6 +46,7 @@ services:
 
   mongodbloader:
     image: mongo:latest
+    restart: always
     depends_on:
       - webui
     environment:
@@ -62,6 +64,7 @@ services:
 
   hss:
     build: ./
+    restart: always
     depends_on:
       - mongodb
     container_name: hss
@@ -76,22 +79,24 @@ services:
         ipv4_address: 192.168.26.10
 
   mme:
-     build: ./
-     depends_on:
+    build: ./
+    restart: always
+    depends_on:
        - hss
-     container_name: mme
-     hostname: mme
-     entrypoint:
+    container_name: mme
+    hostname: mme
+    entrypoint:
       - "/bin/sh"
       - "/etc/open5gs/run_mme.sh"
-     volumes:
+    volumes:
       - "./config:/etc/open5gs"
-     networks:
-       core_network:
-         ipv4_address: 192.168.26.20
+    networks:
+      core_network:
+        ipv4_address: 192.168.26.20
 
   sgw:
      build: ./
+     restart: always
      container_name: sgw
      hostname: sgw
      entrypoint:
@@ -124,6 +129,7 @@ services:
 
   pcrf:
     build: ./
+    restart: always
     depends_on:
        - mongodb
        - hss
