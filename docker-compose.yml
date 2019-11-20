@@ -15,6 +15,7 @@ networks:
 services:
   mongodb:
     image: mongo:latest
+    restart: always
     container_name: "mongodb"
     volumes:
       - mongodb_data:/data/db
@@ -104,6 +105,7 @@ services:
 
   pgw:
      build: ./
+     restart: always
      container_name: pgw
      hostname: pgw
      privileged: true
