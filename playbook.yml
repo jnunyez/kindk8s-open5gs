@@ -12,7 +12,7 @@
       groups: docker
       append: yes
   - name: Building and running the EPC
-    docker_service:
+    docker_compose:
       project_src: /home/{{ ansible_user }}/epc
       files: docker-compose.yml
       state: present
