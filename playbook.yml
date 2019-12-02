@@ -40,7 +40,7 @@
       project_src: /home/{{ ansible_user }}/epc
       files: docker-compose-ext.yml
       state: present
-      when: 'ansible_interfaces == 4'
+    when: 'ansible_interfaces == 4'
     register: output
   - debug:
       var: output
@@ -54,3 +54,4 @@
         - "webui.webui.state.running"
         - "mongodb.mongodb.state.running"
         - "mongodbloader.dbprovisioner.state.running"
+    when: "ansible_interfaces == 4"
