@@ -11,6 +11,10 @@
       name: '{{ ansible_user }}'
       groups: docker
       append: yes
+  - name: create vlan s1c
+    command: 'ip link add link ens7 s1c type vlan id 982'
+  - name: create vlan s1u
+    command: 'ip link add type ens6 s1u type vlan id 983'
   - name: create macvlan ctrl plane
     docker_network:
       name: 's1c'
