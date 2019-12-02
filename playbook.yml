@@ -11,10 +11,26 @@
       name: '{{ ansible_user }}'
       groups: docker
       append: yes
+  - name: create macvlan ctrl plane
+    docker_network:
+      name: 's1c'
+      driver: macvlan
+      driver_options:
+        parent: 'ens6'
+      ipam_options:
+        subnet: '10.15.76.0/25'
+  - name: create macvlan user plane
+    docker_network:
+      name: 's1u'
+      driver: macvlan
+      driver_options:
+        parent: 'ens7'
+      ipam_config:
+        subnet: '10.15.76.128/25'
   - name: Building and running the EPC
     docker_compose:
       project_src: /home/{{ ansible_user }}/epc
-      files: docker-compose.yml
+      files: docker-compose-ext.yml
       state: present
     register: output
   - debug:
