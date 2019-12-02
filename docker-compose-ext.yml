@@ -4,7 +4,9 @@ volumes:
  mongodb_data:
 
 networks:
-  physical:
+  4G_S1C:
+      external: true
+  4G_S1U:
       external: true
 
 services:
@@ -15,8 +17,8 @@ services:
       - mongodb_data:/data/db
     hostname: mongodb
     networks:
-      physical:
-        ipv4_address: 172.30.2.5
+      4G_S1C:
+        ipv4_address: 10.15.76.7
 
   webui:
     build: ./
@@ -34,8 +36,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_webui.sh"
     networks:
-      physical:
-        ipv4_address: 172.30.2.6
+      4G_S1C:
+        ipv4_address: 10.15.76.8
 
   mongodbloader:
     image: mongo:latest
@@ -51,8 +53,8 @@ services:
       - /bin/sh
       - /tmp/run.sh
     networks:
-      physical:
-        ipv4_address: 172.30.2.7
+      4G_S1C:
+        ipv4_address: 10.15.76.9
 
   hss:
     build: ./
@@ -66,8 +68,8 @@ services:
     volumes:
       - "./config:/etc/open5gs"
     networks:
-      physical:
-        ipv4_address: 172.30.2.10
+      4G_S1C:
+        ipv4_address: 10.15.76.5
 
   mme:
      build: ./
@@ -81,8 +83,10 @@ services:
      volumes:
       - "./config:/etc/open5gs"
      networks:
-       physical:
-         ipv4_address: 172.30.2.20
+       4G_S1C:
+         ipv4_address: 10.15.76.2
+       4G_S1U:
+         ipv4_address: 10.15.76.130
 
   sgw:
      build: ./
@@ -94,8 +98,8 @@ services:
      volumes:
       - "./config:/etc/open5gs"
      networks:
-       physical:
-         ipv4_address: 172.30.2.30
+       4G_S1U:
+         ipv4_address: 10.15.76.131
 
   pgw:
      build: ./
@@ -112,8 +116,8 @@ services:
      devices:
        -  /dev/net/tun
      networks:
-       physical:
-         ipv4_address: 172.30.2.40
+       4G_S1U:
+         ipv4_address: 10.15.76.132
 
   pcrf:
     build: ./
@@ -128,5 +132,5 @@ services:
     volumes:
       - "./config:/etc/open5gs"
     networks:
-       physical:
-         ipv4_address: 172.30.2.50
+       4G_S1C:
+         ipv4_address: 10.15.76.6
