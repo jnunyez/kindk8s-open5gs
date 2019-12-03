@@ -4,54 +4,20 @@
   tasks:
   - name: Install docker.io
     apt: name="docker.io" state=present update_cache=yes
+
   - name: Install docker-compose
     apt: name="docker-compose" state=present
+
   - name: adding existing user to group docker
     user:
       name: '{{ ansible_user }}'
       groups: docker
       append: yes
-  - name: create vlan s1c
-    command: 'ip link add link ens7 s1c type vlan id 982'
-    when: 'ansible_interfaces == 4'
-  - name: create vlan s1u
-    command: 'ip link add type ens6 s1u type vlan id 983'
-    when: 'ansible_interfaces == 4'
-  - name: create macvlan ctrl plane
-    docker_network:
-      name: 's1c'
-      driver: macvlan
-      driver_options:
-        parent: 'ens6'
-      ipam_options:
-        subnet: '10.15.76.0/25'
-    when: 'ansible_interfaces == 4'
-  - name: create macvlan user plane
-    docker_network:
-      name: 's1u'
-      driver: macvlan
-      driver_options:
-        parent: 'ens7'
-      ipam_config:
-        subnet: '10.15.76.128/25'
-    when: 'ansible_interfaces == 4'
-  - name: Building and running the EPC
-    docker_compose:
-      project_src: /home/{{ ansible_user }}/epc
-      files: docker-compose-ext.yml
-      state: present
-    when: 'ansible_interfaces == 4'
-    register: output
-  - debug:
-      var: output
-  - assert:
-      that:
-        - "mme.mme.state.running"
-        - "pcrf.pcrf.state.running"
-        - "sgw.sgw.state.running"
-        - "pgw.pgw.state.running"
-        - "hss.hss.state.running"
-        - "webui.webui.state.running"
-        - "mongodb.mongodb.state.running"
-        - "mongodbloader.dbprovisioner.state.running"
-    when: "ansible_interfaces == 4"
+
+ - name: build the containers
+   docker_image:
+     build:
+       path: ./
+     name: epc_image
+     source: build
+           
