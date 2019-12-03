@@ -14,10 +14,10 @@
       groups: docker
       append: yes
 
- - name: build the containers
-   docker_image:
-     build:
-       path: ./
-     name: epc_image
-     source: build
-           
+  - name: build the containers
+    docker_image:
+      build:
+        path: ./
+        pull: yes
+      name: epc_image
+      source: build
