@@ -1,0 +1,45 @@
+version: '2'
+
+volumes:
+ mongodb_data:
+
+networks:
+  s1c:
+      external: true
+  s1u:
+      external: true
+
+services:
+
+  mme:
+     build: ./
+     container_name: mme
+     hostname: mme
+     entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_mme.sh"
+     volumes:
+      - "./config:/etc/open5gs"
+     networks:
+       s1c:
+         ipv4_address: 10.15.76.17
+       s1u:
+         ipv4_address: 10.15.76.25
+
+  pgw:
+     build: ./
+     container_name: pgw
+     hostname: pgw
+     privileged: true
+     entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_pgw.sh"
+     volumes:
+      - "./config:/etc/open5gs"
+     cap_add:
+       -  NET_ADMIN
+     devices:
+       -  /dev/net/tun
+     networks:
+       s1u:
+         ipv4_address: 10.15.76.26
