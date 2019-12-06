@@ -19,7 +19,7 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_mme.sh"
      volumes:
-      - "./config:/etc/open5gs"
+      - "./config-light:/etc/open5gs"
      networks:
        s1c:
          ipv4_address: 10.15.76.17
@@ -35,7 +35,7 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_pgw.sh"
      volumes:
-      - "./config:/etc/open5gs"
+      - "./config-light:/etc/open5gs"
      cap_add:
        -  NET_ADMIN
      devices:
