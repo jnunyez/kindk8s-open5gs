@@ -9,6 +9,12 @@ This repo contains the docker builder and configuration of open5gs. More info of
 
 ## Folder structure
 
+There is an optional ansible-playbook to install docker and docker-requirements in your baremetal/VM of choice.
+
+```
+- ./playbook.yml
+```
+
 Inside `config-` folder you can find the neccessary configs to launch the containeirezed OPEN5GS.
 Each of the configs has associated a different `docker-compose` file. We considered different choices:
 
