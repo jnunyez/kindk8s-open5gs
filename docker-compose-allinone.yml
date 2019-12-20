@@ -1,0 +1,39 @@
+version: '3'
+
+networks:
+  s1c:
+    external: true
+  s1u:
+    external: true
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    volumes:
+      - mongodb_data:/data/db
+    hostname: mongodb
+  epc:
+    depends_on:
+      - mongodb
+    build:
+      context: ./
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    volumes:
+      - config:/etc/open5gs
+    networks:
+       s1c:
+         ipv4_address: 10.15.16.2
+       s1u:
+         ipv4_address: 10.15.17.2
+    hostname: open5gs-run
+    command: /bin/bash -c "/root/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+    
+volumes:
+  mongodb_data:
+  config: {}

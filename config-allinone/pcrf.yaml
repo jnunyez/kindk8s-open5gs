@@ -1,0 +1,11 @@
+logger:
+    file: /var/log/open5gs/pcrf.log
+    trace:
+        app: 1
+        diameter: 1
+
+parameter:
+    no_ipv6: true
+
+pcrf:
+    freeDiameter: /etc/freeDiameter/pcrf.conf
