@@ -25,7 +25,7 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     volumes:
-      - config:/etc/open5gs
+      - config-allinone:/etc/open5gs
     networks:
        s1c:
          ipv4_address: 10.15.16.2
@@ -35,5 +35,6 @@ services:
     command: /bin/bash -c "/root/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
     
 volumes:
+  config-allinone:
   mongodb_data:
   config: {}

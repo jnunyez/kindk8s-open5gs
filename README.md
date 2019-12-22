@@ -40,8 +40,8 @@ docker-compose-allinone.yml
 3. Microservice-based EPC. A folder with the specific open5gs config for each of the element of the EPC col.located in a container. Ideal to start playing with lifecycle management of each of the EPC services.
 
 ```
-- ./config-ext
-docker-compose.ext.yml
+- ./config-diss/
+docker-compose-diss.yml
 ```
 
 
@@ -52,7 +52,7 @@ All the previouse configs are using macvlan network driver to expose epc entitie
 Select your config of choice and build and run the container:
 
 ```
-docker-compose up -f compose_file build --no-cache
+docker-compose -f compose_file build --no-cache
 docker-compose up -d
 ```
 
