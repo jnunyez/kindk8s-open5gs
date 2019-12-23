@@ -12,9 +12,9 @@ parameter:
 pgw:
     freeDiameter: /etc/freeDiameter/pgw.conf
     gtpc:
-      - addr: 10.15.17.2
+      - addr: 127.0.0.3
     gtpu:
-      - addr: 10.15.17.2
+      - addr: 127.0.0.3
     ue_pool:
       - addr: 45.45.0.1/16
     dns:

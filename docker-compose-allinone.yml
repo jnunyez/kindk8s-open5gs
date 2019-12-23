@@ -22,6 +22,43 @@ services:
     networks:
       db:
         ipv4_address: 192.168.50.10
+  
+  webui:
+    build: ./
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb/open5gs
+    container_name: webui
+    hostname: webui
+    ports:
+      - "3000:3000"
+    volumes:
+        - "./config-allinone:/etc/open5gs"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/nextepc/run_webui.sh"
+    networks:
+      db:
+        ipv4_address: 192.168.50.11
+  
+  mongodbloader:
+    image: mongo:latest
+    depends_on:
+      - webui
+    environment:
+      - DB_HOST=mongodb
+    container_name: dbloader
+    volumes:
+      - "./provisioning/db/run_db.sh:/tmp/run.sh"
+      - "./provisioning/db/imsi1.json:/tmp/imsi1.json"
+    entrypoint:
+      - /bin/sh
+      - /tmp/run.sh
+    networks:
+      db:
+        ipv4_address: 192.168.50.12
+
   epc:
     depends_on:
       - mongodb
@@ -43,7 +80,7 @@ services:
        s1u:
          ipv4_address: 10.15.17.2
     hostname: open5gs-run
-    command: /bin/bash -c "/root/config-allinone/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+    command: /bin/bash -c "/etc/open5gs/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
     
 volumes:
   mongodb_data:
