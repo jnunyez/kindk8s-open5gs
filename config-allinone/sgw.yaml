@@ -10,6 +10,6 @@ parameter:
 
 sgw:
     gtpc:
-      addr: 10.15.76.131
+      addr: 10.15.17.2
     gtpu:
-      addr: 10.15.76.131
+      addr: 10.15.17.2

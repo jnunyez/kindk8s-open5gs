@@ -1,3 +1,5 @@
+db_uri: mongodb://192.168.50.10/open5gs
+
 logger:
     file: /var/log/open5gs/pcrf.log
     trace:

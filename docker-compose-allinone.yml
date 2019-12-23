@@ -5,6 +5,12 @@ networks:
     external: true
   s1u:
     external: true
+  db:
+   ipam:
+     driver: default 
+     config:
+      - subnet: 192.168.50.0/24
+
 
 services:
   mongodb:
@@ -13,6 +19,9 @@ services:
     volumes:
       - mongodb_data:/data/db
     hostname: mongodb
+    networks:
+      db:
+        ipv4_address: 192.168.50.10
   epc:
     depends_on:
       - mongodb
@@ -25,16 +34,16 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     volumes:
-      - config-allinone:/etc/open5gs
+      - ./config-allinone:/etc/open5gs
     networks:
+       db: 
+         ipv4_address: 192.168.50.2
        s1c:
          ipv4_address: 10.15.16.2
        s1u:
          ipv4_address: 10.15.17.2
     hostname: open5gs-run
-    command: /bin/bash -c "/root/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+    command: /bin/bash -c "/root/config-allinone/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
     
 volumes:
-  config-allinone:
   mongodb_data:
-  config: {}

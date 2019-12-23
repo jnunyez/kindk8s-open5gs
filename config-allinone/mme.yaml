@@ -13,9 +13,9 @@ parameter:
 mme:
     freeDiameter: /etc/freeDiameter/mme.conf
     s1ap:
-      addr: 10.15.76.2
+      addr: 10.15.16.2
     gtpc:
-      addr: 10.15.76.2
+      addr: 10.15.16.2
     gummei: 
       plmn_id:
         mcc: 001
@@ -26,7 +26,7 @@ mme:
       plmn_id:
         mcc: 001
         mnc: 01
-      tac: 12345
+      tac: 4660
     security:
         integrity_order : [ EIA1, EIA2, EIA0 ]
         ciphering_order : [ EEA0, EEA1, EEA2 ]
@@ -35,8 +35,8 @@ mme:
 
 sgw:
     gtpc:
-      addr: 10.15.77.2
+      addr: 10.15.17.2
 
-#pgw:
-#    gtpc:
-#      addr: 10.15.76.132
+pgw:
+  gtpc:
+    addr: 10.15.17.2
