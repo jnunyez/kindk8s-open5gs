@@ -1,11 +1,12 @@
 logger:
     file: /var/log/open5gs/mme.log
     trace:
-        app: 1
-        s1ap: 1
-        nas: 1
-        diameter: 1
-        gtpv2: 1
+        app: 5
+        s1ap: 5
+        nas: 5
+        diameter: 5
+        gtpv2: 5
+        gtp: 5
 
 parameter:
     no_ipv6: true

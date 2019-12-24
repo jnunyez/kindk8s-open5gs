@@ -17,6 +17,8 @@ pgw:
       - addr: 127.0.0.3
     ue_pool:
       - addr: 45.45.0.1/16
+        apn: "internet"
+        dev: "ogstun"
     dns:
       - 8.8.8.8
       - 8.8.4.4

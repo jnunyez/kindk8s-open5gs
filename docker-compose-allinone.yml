@@ -15,7 +15,7 @@ networks:
 services:
   mongodb:
     image: mongo:latest
-    container_name: "mongodb"
+    container_name: "open5gs_mongodb"
     volumes:
       - mongodb_data:/data/db
     hostname: mongodb
@@ -24,12 +24,13 @@ services:
         ipv4_address: 192.168.50.10
   
   webui:
-    build: ./
+    build: ./webui
     depends_on:
       - mongodb
     environment:
       - DB_URI=mongodb://mongodb/open5gs
-    container_name: webui
+      - MONGODB_STARTUP_TIME=15
+    container_name: "open5gs_webui"
     hostname: webui
     ports:
       - "3000:3000"
@@ -37,7 +38,7 @@ services:
         - "./config-allinone:/etc/open5gs"
     entrypoint:
       - "/bin/sh"
-      - "/etc/nextepc/run_webui.sh"
+      - "/etc/open5gs/webui.sh"
     networks:
       db:
         ipv4_address: 192.168.50.11
@@ -48,7 +49,7 @@ services:
       - webui
     environment:
       - DB_HOST=mongodb
-    container_name: dbloader
+    container_name: "open5gs_dbloader"
     volumes:
       - "./provisioning/db/run_db.sh:/tmp/run.sh"
       - "./provisioning/db/imsi1.json:/tmp/imsi1.json"
@@ -62,6 +63,7 @@ services:
   epc:
     depends_on:
       - mongodb
+    container_name: "open5gs_epc"
     build:
       context: ./
     cap_add:
