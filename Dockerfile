@@ -12,10 +12,10 @@ RUN git clone --recursive https://github.com/open5gs/open5gs
 RUN cd open5gs && ~/.local/bin/meson build --prefix=/ && ninja -C build && cd build && ninja install
 
 RUN apt-get -y install curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get -y install nodejs
+#RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+#RUN apt-get -y install nodejs
 
-RUN cd open5gs/webui && npm install && npm run build
+#RUN cd open5gs/webui && npm install && npm run build
 
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
