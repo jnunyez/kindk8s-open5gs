@@ -3,7 +3,7 @@ FROM node:carbon
 MAINTAINER Jose Nuñez <jonunyez@gmail.com>
 
 ARG PACKAGE=open5gs
-ARG VERSION=1.0.0
+ARG VERSION=1.2.1
 
 RUN set -e; \
     cd /usr/src; \
@@ -13,7 +13,7 @@ RUN set -e; \
     mv ./$PACKAGE-$VERSION/ ./$PACKAGE;
 
 WORKDIR /usr/src/open5gs/webui
-RUN npm install && \
-    npm run build
+RUN npm install 
+RUN npm run build
 
 EXPOSE 3000
