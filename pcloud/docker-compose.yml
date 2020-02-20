@@ -15,7 +15,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb/open5gs
+      - DB_URI=mongodb://127.0.0.1/open5gs
       - MONGODB_STARTUP_TIME=15
     container_name: "open5gs_webui"
     hostname: "webui"
@@ -34,7 +34,7 @@ services:
     depends_on:
       - webui
     environment:
-      - DB_HOST=mongodb
+      - DB_HOST=127.0.0.1
     container_name: "open5gs_dbloader"
     hostname: "dbloader"
     network_mode: host
@@ -48,6 +48,8 @@ services:
   epc:
     depends_on:
       - mongodb
+    environment:
+      - MONGODB_STARTUP_TIME=15
     container_name: "open5gs_epc"
     hostname: "epc"
     network_mode: host

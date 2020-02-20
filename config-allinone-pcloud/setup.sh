@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Waiting for " ${MONGODB_STARTUP_TIME} "s for mongodb to be ready..."
+sleep ${MONGODB_STARTUP_TIME}
+
 if ! grep "ogstun" /proc/net/dev > /dev/null; then
     ip tuntap add name ogstun mode tun
 fi
