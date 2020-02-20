@@ -16,7 +16,7 @@
 
   - name: build and run `docker-compose up`
     docker_compose:
-      files: docker-compose-allinone-pcloud.yml
+      project_src: pcloud
       build: yes
     register: output
 

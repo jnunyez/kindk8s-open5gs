@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: "open5gs_mongodb"
+    volumes:
+      - mongodb_data:/data/db
+    hostname: "mongodb"
+    restart: "always"
+    network_mode: host
+
+  webui:
+    build: ./webui
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb/open5gs
+      - MONGODB_STARTUP_TIME=15
+    container_name: "open5gs_webui"
+    hostname: "webui"
+    restart: "always"
+    network_mode: host
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./config-allinone-pcloud:/etc/open5gs:z"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/webui.sh"
+
+  mongodbloader:
+    image: mongo:latest
+    depends_on:
+      - webui
+    environment:
+      - DB_HOST=mongodb
+    container_name: "open5gs_dbloader"
+    hostname: "dbloader"
+    network_mode: host
+    volumes:
+      - "./provisioning/db/run_db.sh:/tmp/run.sh:z"
+      - "./provisioning/db/imsi1.json:/tmp/imsi1.json:z"
+    entrypoint:
+      - /bin/sh
+      - /tmp/run.sh
+
+  epc:
+    depends_on:
+      - mongodb
+    container_name: "open5gs_epc"
+    hostname: "epc"
+    network_mode: host
+    restart: "always"
+    build:
+      context: ./
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    volumes:
+      - "./config-allinone-pcloud:/etc/open5gs:z"
+    command: /bin/bash -c "/etc/open5gs/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+
+volumes:
+  mongodb_data:
