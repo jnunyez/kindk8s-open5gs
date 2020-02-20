@@ -7,6 +7,7 @@ services:
     volumes:
       - mongodb_data:/data/db
     hostname: "mongodb"
+    restart: "always"
     network_mode: host
 
   webui:
@@ -18,6 +19,7 @@ services:
       - MONGODB_STARTUP_TIME=15
     container_name: "open5gs_webui"
     hostname: "webui"
+    restart: "always"
     network_mode: host
     ports:
       - "3000:3000"
@@ -49,6 +51,7 @@ services:
     container_name: "open5gs_epc"
     hostname: "epc"
     network_mode: host
+    restart: "always"
     build:
       context: ./
     cap_add:

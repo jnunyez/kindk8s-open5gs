@@ -14,9 +14,17 @@
       groups: docker
       append: yes
 
-  - name: build the containers
-    docker_image:
-      build:
-        path: ./
-      name: epc_image
-      source: build
+  - name: build and run `docker-compose up`
+    docker_compose:
+      files: docker-compose-allinone-pcloud.yml
+      build: yes
+    register: output
+
+  - debug:
+      var: output
+
+  - assert:
+    that:
+      - "mongodb.open5gs_mongodb.state.running"
+      - "webui.open5gs_webui.state.running"
+      - "epc.open5gs_epc.state.running"
