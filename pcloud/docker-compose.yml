@@ -11,7 +11,7 @@ services:
     network_mode: host
 
   webui:
-    build: ./webui
+    build: ../webui
     depends_on:
       - mongodb
     environment:
@@ -24,7 +24,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./config-allinone-pcloud:/etc/open5gs:z"
+      - "../config-allinone-pcloud:/etc/open5gs:z"
     entrypoint:
       - "/bin/sh"
       - "/etc/open5gs/webui.sh"
@@ -39,8 +39,8 @@ services:
     hostname: "dbloader"
     network_mode: host
     volumes:
-      - "./provisioning/db/run_db.sh:/tmp/run.sh:z"
-      - "./provisioning/db/imsi1.json:/tmp/imsi1.json:z"
+      - "../provisioning/db/run_db.sh:/tmp/run.sh:z"
+      - "../provisioning/db/imsi1.json:/tmp/imsi1.json:z"
     entrypoint:
       - /bin/sh
       - /tmp/run.sh
@@ -53,7 +53,7 @@ services:
     network_mode: host
     restart: "always"
     build:
-      context: ./
+      context: ../
     cap_add:
       - NET_ADMIN
     devices:
@@ -61,7 +61,7 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     volumes:
-      - "./config-allinone-pcloud:/etc/open5gs:z"
+      - "../config-allinone-pcloud:/etc/open5gs:z"
     command: /bin/bash -c "/etc/open5gs/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
 
 volumes:
