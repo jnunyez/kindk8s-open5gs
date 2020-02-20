@@ -24,7 +24,7 @@
       var: output
 
   - assert:
-    that:
-      - "mongodb.open5gs_mongodb.state.running"
-      - "webui.open5gs_webui.state.running"
-      - "epc.open5gs_epc.state.running"
+      that:
+        - "mongodb.open5gs_mongodb.state.running"
+        - "webui.open5gs_webui.state.running"
+        - "epc.open5gs_epc.state.running"
