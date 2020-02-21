@@ -3,16 +3,25 @@
   become: true
   tasks:
   - name: Install docker.io
-    apt: name="docker.io" state=present update_cache=yes
+    apt:
+      name: "docker.io"
+      state: latest
+      update_cache: yes
 
-  - name: Install docker-compose
-    apt: name="docker-compose" state=present
-
-  - name: adding existing user to group docker
+  - name: adding existing user '{{ user }}' to group docker
     user:
       name: '{{ ansible_user }}'
       groups: docker
       append: yes
+
+  - name: enable docker service
+    systemd:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Install docker-compose
+    apt: name="docker-compose" state=present
 
   - name: build and run `docker-compose up`
     docker_compose:
