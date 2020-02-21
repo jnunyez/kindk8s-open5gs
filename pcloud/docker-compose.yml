@@ -8,7 +8,7 @@ services:
       - mongodb_data:/data/db
     hostname: "mongodb"
     restart: "always"
-    network_mode: host
+    network_mode: "host"
 
   webui:
     build: ../webui
@@ -20,7 +20,7 @@ services:
     container_name: "open5gs_webui"
     hostname: "webui"
     restart: "always"
-    network_mode: host
+    network_mode: "host"
     ports:
       - "3000:3000"
     volumes:
@@ -35,9 +35,10 @@ services:
       - webui
     environment:
       - DB_HOST=127.0.0.1
+      - MONGO_DB_STARTUP_TIME=5
     container_name: "open5gs_dbloader"
     hostname: "dbloader"
-    network_mode: host
+    network_mode: "host"
     volumes:
       - "../provisioning/db/run_db.sh:/tmp/run.sh:z"
       - "../provisioning/db/imsi1.json:/tmp/imsi1.json:z"
@@ -52,7 +53,7 @@ services:
       - MONGODB_STARTUP_TIME=15
     container_name: "open5gs_epc"
     hostname: "epc"
-    network_mode: host
+    network_mode: "host"
     restart: "always"
     build:
       context: ../
