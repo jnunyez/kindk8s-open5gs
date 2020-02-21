@@ -12,5 +12,6 @@ ip addr add 45.45.0.1/16 dev ogstun
 #ip addr add cafe::1/64 dev ogstun
 
 ip link set ogstun up
+iptables -P FORWARD ACCEPT
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 iptables -I INPUT -i ogstun -j ACCEPT
