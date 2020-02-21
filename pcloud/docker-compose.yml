@@ -35,7 +35,7 @@ services:
       - webui
     environment:
       - DB_HOST=127.0.0.1
-      - MONGO_DB_STARTUP_TIME=5
+      - MONGO_DB_STARTUP_TIME=15
     container_name: "open5gs_dbloader"
     hostname: "dbloader"
     network_mode: "host"
