@@ -39,6 +39,7 @@ services:
     container_name: "open5gs_dbloader"
     hostname: "dbloader"
     network_mode: "host"
+    restart: "always"
     volumes:
       - "../provisioning/db/run_db.sh:/tmp/run.sh:z"
       - "../provisioning/db/imsi1.json:/tmp/imsi1.json:z"
