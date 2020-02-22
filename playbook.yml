@@ -37,3 +37,4 @@
         - "mongodb.open5gs_mongodb.state.running"
         - "webui.open5gs_webui.state.running"
         - "epc.open5gs_epc.state.running"
+        - "mongodbloader.open5gs_dbloader.state.running"
