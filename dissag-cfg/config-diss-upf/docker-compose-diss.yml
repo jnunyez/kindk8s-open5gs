@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  sgw:
+    build:
+      context: ../../
+    container_name: "open5gs_sgw"
+    hostname: "sgw"
+    restart: "always"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_sgw.sh"
+    volumes:
+      - "./cfg:/etc/open5gs:z"
+
+  pgw:
+    build:
+      context: ../../
+    container_name: "open5gs_pgw"
+    hostname: "pgw"
+    network_mode: "host"
+    restart: "always"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_pgw.sh"
+    volumes:
+      - "./cfg:/etc/open5gs:z"
+    cap_add:
+      -  NET_ADMIN
+    devices:
+      -  /dev/net/tun
+
+  pcrf:
+    build:
+      context: ../../
+    depends_on:
+    container_name: "open5gs_pcrf"
+    hostname: "pcrf"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_pcrf.sh"
+    volumes:
+      - "./cfg:/etc/open5gs:z"
+    network_mode: "host"
+    restart: "always"
