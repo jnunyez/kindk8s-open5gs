@@ -1,0 +1,83 @@
+version: '3'
+
+networks:
+  physical:
+    external: true
+  db:
+   ipam:
+     driver: default 
+     config:
+      - subnet: 192.168.50.0/24
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: "open5gs_mongodb"
+    volumes:
+      - mongodb_data:/data/db
+    hostname: mongodb
+    networks:
+      db:
+        ipv4_address: 192.168.50.5
+  
+  webui:
+    build: ../webui
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb/open5gs
+      - MONGODB_STARTUP_TIME=15
+    container_name: "open5gs_webui"
+    hostname: webui
+    ports:
+      - "3100:3000"
+    volumes:
+        - "../config-allinone-1ip:/etc/open5gs:z"
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/webui.sh"
+    networks:
+      db:
+        ipv4_address: 192.168.50.6
+  
+  mongodbloader:
+    image: mongo:latest
+    depends_on:
+      - webui
+    environment:
+      - DB_HOST=mongodb
+    container_name: "open5gs_dbloader"
+    volumes:
+      - "../provisioning/db/run_db.sh:/tmp/run.sh:z"
+      - "../provisioning/db/imsi1.json:/tmp/imsi1.json:z"
+    entrypoint:
+      - /bin/sh
+      - /tmp/run.sh
+    networks:
+      db:
+        ipv4_address: 192.168.50.7
+
+  epc:
+    depends_on:
+      - mongodb
+    container_name: "open5gs_epc"
+    build:
+      context: ../
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    volumes:
+      - ../config-allinone-1ip:/etc/open5gs
+    networks:
+       db: 
+         ipv4_address: 192.168.50.8
+       physical:
+         ipv4_address: 172.30.2.21
+    hostname: open5gs-run
+    command: /bin/bash -c "/etc/open5gs/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+    
+volumes:
+  mongodb_data:
