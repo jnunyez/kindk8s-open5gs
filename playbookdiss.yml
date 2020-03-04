@@ -37,5 +37,5 @@
         - "mongodb.open5gs_mongodb.state.running"
         - "webui.open5gs_webui.state.running"
         - "mme.open5gs_mme.state.running"
-          "hss.open5gs_hss.state_running"
+        - "hss.open5gs_hss.state_running"
         - "mongodbloader.open5gs_dbloader.state.running"
