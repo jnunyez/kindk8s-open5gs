@@ -1,11 +1,11 @@
 logger:
     file: /var/log/open5gs/mme.log
     trace:
-        app: 1
-        s1ap: 1
-        nas: 1
-        diameter: 1
-        gtpv2: 1
+        app: 5
+        s1ap: 5
+        nas: 5
+        diameter: 5
+        gtpv2: 5
 
 parameter:
     no_ipv6: true
@@ -13,20 +13,18 @@ parameter:
 mme:
     freeDiameter: /etc/freeDiameter/mme.conf
     s1ap:
-      addr: 10.15.76.2
     gtpc:
-      addr: 10.15.76.130
     gummei: 
       plmn_id:
-        mcc: 001
-        mnc: 01
+        mcc: 722
+        mnc: 07
       mme_gid: 2
       mme_code: 1
     tai:
       plmn_id:
-        mcc: 001
-        mnc: 01
-      tac: 12345
+        mcc: 722
+        mnc: 07
+      tac: 4660
     security:
         integrity_order : [ EIA1, EIA2, EIA0 ]
         ciphering_order : [ EEA0, EEA1, EEA2 ]
@@ -35,8 +33,8 @@ mme:
 
 sgw:
     gtpc:
-      addr: 10.15.76.131
+      addr: 172.30.0.26
 
 pgw:
     gtpc:
-      addr: 10.15.76.132
+      addr: 172.30.0.26

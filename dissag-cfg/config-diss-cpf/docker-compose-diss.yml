@@ -24,6 +24,7 @@ services:
     container_name: "open5gs_webui"
     hostname: "webui"
     restart: "always"
+    privileged: true
     network_mode: "host"
     ports:
       - "3000:3000"
@@ -33,20 +34,21 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_webui.sh"
 
-  mongodbloader:
-    image: mongo:latest
-    depends_on:
-      - webui
-    environment:
-      - DB_HOST=mongodb
-      - MONGODB_STARTUP_TIME=15
-    container_name: "open5gs_dbprovisioner"
-    volumes:
-      - "./provisioning/db/run_db.sh:/tmp/run.sh:z"
-      - "./provisioning/db/imsi1.json:/tmp/imsi1.json:z"
-    entrypoint:
-      - /bin/sh
-      - /tmp/run.sh
+        #  mongodbloader:
+        #image: mongo:latest
+        #depends_on:
+        #- webui
+        #environment:
+        #- DB_HOST=127.0.0.1
+        #- MONGODB_STARTUP_TIME=15
+        #network_mode: "host"
+        #container_name: "open5gs_dbprovisioner"
+        #volumes:
+        #- "./provisioning/db/run_db.sh:/tmp/run.sh:z"
+        #- "./provisioning/db/imsi1.json:/tmp/imsi1.json:z"
+        #entrypoint:
+        #- /bin/sh
+        #- /tmp/run.sh
 
   hss:
     build:
@@ -55,6 +57,7 @@ services:
       - mongodb
     container_name: "open5gs_hss"
     hostname: "hss"
+    network_mode: "host"
     entrypoint:
       - "/bin/sh"
       - "/etc/open5gs/run_hss.sh"
@@ -67,6 +70,7 @@ services:
     depends_on:
       - hss
     container_name: "open5gs_mme"
+    network_mode: "host"
     hostname: "mme"
     entrypoint:
       - "/bin/sh"
