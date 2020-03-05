@@ -1,4 +1,4 @@
-db_uri: mongodb://localhost/open5gs
+db_uri: mongodb://127.0.0.1/open5gs
 
 logger:
     file: /var/log/open5gs/hss.log
@@ -9,4 +9,4 @@ logger:
 parameter:
 
 hss:
-    freeDiameter: /etc/freeDiameter/hss.conf
+    freeDiameter: /etc/open5gs/freeDiameter/hss.conf

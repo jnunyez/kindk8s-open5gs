@@ -10,7 +10,7 @@ parameter:
     no_ipv6: true
 
 pgw:
-    freeDiameter: /etc/freeDiameter/pgw.conf
+    freeDiameter: /etc/open5gs/freeDiameter/pgw.conf
     gtpc:
       - addr: 10.15.76.132
     gtpu:
