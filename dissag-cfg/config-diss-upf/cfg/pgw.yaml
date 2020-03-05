@@ -1,20 +1,20 @@
 logger:
     file: /var/log/open5gs/pgw.log
     trace:
-        app: 1
-        diameter: 1
-        gtpv2: 1
-        gtp: 1
+        app: 5
+        diameter: 5
+        gtpv2: 5
+        gtp: 5
 
 parameter:
     no_ipv6: true
 
 pgw:
-    freeDiameter: /etc/freeDiameter/pgw.conf
+    freeDiameter: /etc/open5gs/freeDiameter/pgw.conf
     gtpc:
-      - addr: 127.0.0.2
+      - addr: 172.30.2.13
     gtpu:
-      - addr: 127.0.0.2
+      - addr: 172.30.2.13
     ue_pool:
       - addr: 45.45.0.1/16
         apn: "internet"

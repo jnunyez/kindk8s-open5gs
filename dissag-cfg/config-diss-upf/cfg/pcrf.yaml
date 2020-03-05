@@ -10,4 +10,4 @@ parameter:
     no_ipv6: true
 
 pcrf:
-    freeDiameter: /etc/freeDiameter/pcrf.conf
+    freeDiameter: /etc/open5gs/freeDiameter/pcrf.conf
