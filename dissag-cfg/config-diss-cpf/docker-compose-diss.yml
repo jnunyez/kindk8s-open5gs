@@ -41,6 +41,7 @@ services:
       - DB_HOST=127.0.0.1
       - MONGODB_STARTUP_TIME=15
     network_mode: "host"
+    restart: "always"
     container_name: "open5gs_dbprovisioner"
     volumes:
       - "./provisioning/db/run_db.sh:/tmp/run.sh:z"
