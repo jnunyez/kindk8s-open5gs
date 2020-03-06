@@ -33,7 +33,7 @@
   - debug:
       var: output
 
-   - assert:
+  - assert:
       that:
         - "mongodb.open5gs_mongodb.state.running"
         - "webui.open5gs_webui.state.running"
