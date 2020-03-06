@@ -26,6 +26,7 @@
   - name: build
     docker_compose:
       project_src: dissag-cfg/config-diss-cpf/
+      files: docker-compose-diss.yml
       build: yes
       state: "present"
     register: output
