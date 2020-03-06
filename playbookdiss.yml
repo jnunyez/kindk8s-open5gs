@@ -40,4 +40,4 @@
         - "webui.open5gs_webui.state.running"
         - "mme.open5gs_mme.state.running"
         - "hss.open5gs_hss.state.running"
-        - "mongodbloader.open5gs_dbloader.state.running"
+        - "mongodbloader.open5gs_dbprovisioner.state.running"
