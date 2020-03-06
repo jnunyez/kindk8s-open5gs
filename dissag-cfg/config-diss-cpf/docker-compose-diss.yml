@@ -39,7 +39,7 @@ services:
       - webui
     environment:
       - DB_HOST=127.0.0.1
-      - MONGODB_STARTUP_TIME=25
+      - MONGODB_STARTUP_TIME=15
     network_mode: "host"
     container_name: "open5gs_dbprovisioner"
     volumes:

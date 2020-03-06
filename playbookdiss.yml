@@ -23,11 +23,11 @@
   - name: Install docker-compose
     apt: name="docker-compose" state=present
 
-  - name: build and run `docker-compose up`
+  - name: build
     docker_compose:
-      project_src: pcloud
+      project_src: dissag-cfg/config-diss-cpf/
       build: yes
-      state: "absent"
+      state: "present"
     register: output
 
   - debug:
