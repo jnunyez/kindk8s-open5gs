@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-diss.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sgw
+  name: sgw
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sgw
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-diss.yml
+        kompose.version: 1.21.0 (992df58d8)
+        "cni.projectcalico.org/ipAddrs": "[\"172.30.20.12\"]"
+      creationTimestamp: null
+      labels:
+        io.kompose.network/physical: "true"
+        io.kompose.service: sgw
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - /etc/open5gs/run_sgw.sh
+        image: registry.local:5000/config-diss-upf_sgw:latest
+        imagePullPolicy: "Always"
+        name: open5gs-sgw
+        resources: {}
+        ports:
+          - containerPort: 2123
+            protocol: "UDP"
+          - containerPort: 2152
+            protocol: "UDP"
+        volumeMounts:
+        - mountPath: /etc/open5gs
+          name: sgw-claim0
+      hostname: sgw
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: sgw-claim0
+        persistentVolumeClaim:
+          claimName: sgw-claim0
+status: {}

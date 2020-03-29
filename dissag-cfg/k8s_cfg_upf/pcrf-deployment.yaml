@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-diss.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: pcrf
+  name: pcrf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pcrf
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-diss.yml
+        kompose.version: 1.21.0 (992df58d8)
+        "cni.projectcalico.org/ipAddrs": "[\"172.30.20.14\"]"
+      creationTimestamp: null
+      labels:
+        io.kompose.network/physical: "true"
+        io.kompose.service: pcrf
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - /etc/open5gs/run_pcrf.sh
+        image: registry.local:5000/config-diss-upf_pcrf:latest
+        imagePullPolicy: "Always"
+        name: open5gs-pcrf
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/open5gs
+          name: pcrf-claim0
+      hostname: pcrf
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: pcrf-claim0
+        persistentVolumeClaim:
+          claimName: pcrf-claim0
+status: {}

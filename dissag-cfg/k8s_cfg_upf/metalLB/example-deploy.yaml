@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udplistener
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: udplistener
+  template:
+    metadata:
+      labels:
+        app: udplistener
+    spec:
+      containers:
+      - image: mendhak/udp-listener
+        imagePullPolicy: Always
+        name: udp-listener
+        ports:
+        - containerPort: 5005
+          protocol: UDP
+          hostPort: 5005
+      restartPolicy: Always

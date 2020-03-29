@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: samplepod
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[{ 
+        "name": "macvlan-conf",
+        "ips": [ "192.168.50.21" ],
+        "default-route": ["192.168.50.1"]
+     }]'
+spec:
+  containers:
+  - name: samplepod
+    command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: alpine
+  dnsPolicy: None
+  dnsConfig:
+    nameservers: ["192.168.50.1"]
+    searches:
+    - local
