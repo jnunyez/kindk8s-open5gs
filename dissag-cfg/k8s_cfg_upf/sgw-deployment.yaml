@@ -18,10 +18,16 @@ spec:
     type: Recreate
   template:
     metadata:
+      name: open5gs_sgw
       annotations:
         kompose.cmd: kompose convert -f docker-compose-diss.yml
         kompose.version: 1.21.0 (992df58d8)
-        "cni.projectcalico.org/ipAddrs": "[\"172.30.20.12\"]"
+        k8s.v1.cni.cncf.io/networks: '[{
+        "name": "macvlan-conf",
+        "ips": [ "192.168.50.21" ],
+        "default-route": ["192.168.50.1"]
+        }]'
+
       creationTimestamp: null
       labels:
         io.kompose.network/physical: "true"
@@ -50,4 +56,8 @@ spec:
       - name: sgw-claim0
         persistentVolumeClaim:
           claimName: sgw-claim0
-status: {}
+      dnsPolicy: None
+      dnsConfig:
+        nameservers: ["172.30.2.4"]
+        searches:
+        - local
