@@ -1,0 +1,44 @@
+logger:
+    file: /var/log/open5gs/mme.log
+    trace:
+        app: 1
+        s1ap: 1
+        nas: 1
+        diameter: 1
+        gtpv2: 1
+
+parameter:
+    no_ipv6: true
+
+mme:
+    freeDiameter: /etc/open5gs/freeDiameter/mme.conf
+    s1ap:
+    gtpc:
+    gummei: 
+      plmn_id:
+        mcc: 722
+        mnc: 07
+      mme_gid: 2
+      mme_code: 1
+    tai:
+      plmn_id:
+        mcc: 722
+        mnc: 07
+      tac: 4660
+    security:
+        integrity_order : [ EIA1, EIA2, EIA0 ]
+        ciphering_order : [ EEA0, EEA1, EEA2 ]
+    network_name:
+        full: KubeOpen5GS
+
+sgw:
+    gtpc:
+      addr: 192.168.50.21
+    gtpu:
+      addr: 192.168.50.21
+
+pgw:
+    gtpc:
+      addr: 192.168.50.22
+    gtpu:
+      addr: 192.168.50.22
