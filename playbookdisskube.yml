@@ -25,7 +25,7 @@
 
   - name: build
     docker_compose:
-      project_src: dissag-cfg/k8s_cfg_cpf/config-diss-cpf-kube/
+      project_src: dissag-cfg/k8s_cfg_cpf/
       files: docker-compose-diss.yml
       build: yes
       state: "present"
