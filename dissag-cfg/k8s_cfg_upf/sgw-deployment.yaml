@@ -48,14 +48,14 @@ spec:
             protocol: "UDP"
         volumeMounts:
         - mountPath: /etc/open5gs
-          name: sgw-claim0
+          name: upf-cfg-claim0
       hostname: sgw
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
-      - name: sgw-claim0
+      - name: upf-cfg-claim0
         persistentVolumeClaim:
-          claimName: sgw-claim0
+          claimName: upf-cfg-claim0
       dnsPolicy: None
       dnsConfig:
         nameservers: ["172.30.2.4"]

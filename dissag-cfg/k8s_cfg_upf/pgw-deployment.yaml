@@ -51,14 +51,14 @@ spec:
           privileged: true
         volumeMounts:
         - mountPath: /etc/open5gs
-          name: pgw-claim0
+          name: upf-cfg-claim0
       hostname: pgw
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
-      - name: pgw-claim0
+      - name: upf-cfg-claim0
         persistentVolumeClaim:
-          claimName: pgw-claim0
+          claimName: upf-cfg-claim0
       dnsPolicy: None
       dnsConfig:
         nameservers: ["172.30.2.4"]

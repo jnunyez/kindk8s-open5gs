@@ -41,7 +41,7 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /etc/open5gs
-          name: pcrf-claim0
+          name: upf-cfg-claim0
       dnsPolicy: None
       dnsConfig:
         nameservers: ["172.30.2.4"]
@@ -51,6 +51,6 @@ spec:
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
-      - name: pcrf-claim0
+      - name: upf-cfg-claim0
         persistentVolumeClaim:
-          claimName: pcrf-claim0
+          claimName: upf-cfg-claim0
