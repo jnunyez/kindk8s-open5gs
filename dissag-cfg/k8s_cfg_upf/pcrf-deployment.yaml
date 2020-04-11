@@ -35,7 +35,7 @@ spec:
         command:
         - /bin/sh
         - /etc/open5gs/run_pcrf.sh
-        image: registry.local:5000/config-diss-upf_pcrf:latest
+        image: registry.local/config-diss-upf_pcrf:latest
         imagePullPolicy: "Always"
         name: open5gs-pcrf
         resources: {}

@@ -37,7 +37,7 @@ spec:
       - command:
         - /bin/sh
         - /etc/open5gs/run_sgw.sh
-        image: registry.local:5000/config-diss-upf_sgw:latest
+        image: registry.local/config-diss-upf_sgw:latest
         imagePullPolicy: "Always"
         name: open5gs-sgw
         resources: {}
