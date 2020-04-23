@@ -31,23 +31,35 @@ Each of the configs has associated a different `docker-compose` file. We conside
 docker-compose-light.yml
 ```
 
-2. Allinone EPC: All the elments of the EPC in one container (no dissagregation here). An additional container for the DB appliance (mongo-db) and another one for the front-end dashboard of the db. Ideal for a quickly having a full EPC to test. 
+2. Allinone EPC: All the elements of the EPC in one container (no dissagregation here). An additional container for the DB appliance (mongo-db) and another one for the front-end dashboard of the db. Ideal for a quickly having a full EPC to test. 
 
 ```
 - ./config-allinone/
 docker-compose-allinone.yml
 ```
 
+3. Allinone EPC with one IP address: "allinone-1ip": Allinone-1ip, all the elements of the EPC in one container
+   (no dissagregation here). The main difference with the previous one is that
+   only 1 IP address is exposed at S1 level.
 
-3. Microservice-based EPC. A folder with the specific open5gs config for each of the element of the EPC col.located in a container. Ideal to start playing with lifecycle management of each of the EPC services.
+```
+- ./config-allinone-1ip/
+docker-compose-allinone.yml
+```
+
+
+4. Microservice-based EPC. A folder with the specific open5gs config for each of the element of the EPC col.located in a container. Ideal to start playing with lifecycle management of each of the EPC services.
 
 ```
 - ./config-diss/
 docker-compose-diss.yml
 ```
 
+5. Microservice-based EPC for k8s. Specific configs of open5gs microservice to
+   be deployed for each element of the EPC. Ideal to start playing with k8s and
+   open5gs.
 
-All the previouse configs are using macvlan network driver to expose epc entities to external elements (iperf server, antenna etc)
+All the previous configs are using macvlan network driver to expose epc entities to external elements (iperf server, antenna etc)
 
 ## Usage
 
