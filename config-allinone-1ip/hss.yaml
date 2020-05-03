@@ -2,11 +2,10 @@ db_uri: mongodb://192.168.50.5/open5gs
 
 logger:
     file: /var/log/open5gs/hss.log
-    trace: 
-        app: 1
-        diameter: 1
+    level: error
 
 parameter:
+    no_ipv6: true
 
 hss:
     freeDiameter: /etc/freeDiameter/hss.conf

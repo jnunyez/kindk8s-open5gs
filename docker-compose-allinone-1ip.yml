@@ -3,8 +3,8 @@ version: '3'
 networks:
   physical:
     external: true
-  db:
-   ipam:
+  private:
+    ipam:
      driver: default 
      config:
       - subnet: 192.168.50.0/24
@@ -17,7 +17,7 @@ services:
       - mongodb_data:/data/db
     hostname: mongodb
     networks:
-      db:
+      private:
         ipv4_address: 192.168.50.5
   
   webui:
@@ -37,7 +37,7 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/webui.sh"
     networks:
-      db:
+      private:
         ipv4_address: 192.168.50.6
   
   mongodbloader:
@@ -54,7 +54,7 @@ services:
       - /bin/sh
       - /tmp/run.sh
     networks:
-      db:
+      private:
         ipv4_address: 192.168.50.7
 
   epc:
@@ -72,12 +72,12 @@ services:
     volumes:
       - ./config-allinone-1ip:/etc/open5gs
     networks:
-       db: 
+       private:
          ipv4_address: 192.168.50.8
        physical:
          ipv4_address: 172.30.2.21
     hostname: open5gs-run
-    command: /bin/bash -c "/etc/open5gs/setup.sh; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
+    command: /bin/bash -c "/etc/open5gs/setup.sh; sleep 15 ; /bin/open5gs-pcrfd -D; /bin/open5gs-pgwd -D; /bin/open5gs-sgwd -D; /bin/open5gs-hssd -D; /bin/open5gs-mmed"
     
 volumes:
   mongodb_data:
