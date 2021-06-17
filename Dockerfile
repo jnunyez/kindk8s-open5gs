@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
-MAINTAINER Jose Nuñez <jose.nunezmartinez@telefonica.com>
+MAINTAINER Jose Nuñez <jnunez@redhat.com>
 ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update
 RUN apt-get -yq dist-upgrade
 
@@ -16,7 +17,7 @@ ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
-RUN apt-get --no-install-recommends -qy install tshark 
+RUN apt-get --no-install-recommends -qy install tshark
 
 ENV MONGODB_STARTUP_TIME 15
 WORKDIR /
