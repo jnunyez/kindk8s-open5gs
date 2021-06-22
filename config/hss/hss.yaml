@@ -1,0 +1,10 @@
+db_uri: mongodb://172.30.1.12/open5gs
+
+logger:
+  file: /var/log/open5gs/hss.log
+  level: trace
+
+parameter:
+
+hss:
+  freeDiameter: /etc/freeDiameter/hss.conf

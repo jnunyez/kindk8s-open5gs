@@ -1,0 +1,21 @@
+logger:
+    file: /var/log/open5gs/ugf.log
+    trace:
+        app: 1
+        diameter: 1
+        gtpv2: 1
+        gtp: 1
+
+parameter:
+    no_ipv6: true
+
+upf:
+    pfcp:
+      - addr: 172.30.1.8
+    gtpu:
+      - addr: 172.30.1.8
+        advertise: 172.30.1.8
+    subnet:
+      - addr: 45.45.0.0/16
+        dev: ogstun
+        dnn: internet
