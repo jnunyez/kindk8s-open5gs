@@ -32,7 +32,7 @@ services:
     expose:
       - "3000/tcp" 
     volumes:
-        - "./config-diss/webui:/etc/open5gs"
+        - "./config/webui:/etc/open5gs"
         - "./log:/var/log/open5gs"
     entrypoint:
       - "/bin/sh"
@@ -65,7 +65,7 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_nrf.sh"
     volumes:
-      - ./config-diss/nrf:/etc/open5gs
+      - ./config/nrf:/etc/open5gs
       - ./log:/var/log/open5gs
     expose:
       - "7777/tcp"
@@ -83,8 +83,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_hss.sh"
     volumes:
-      - "./config-diss/hss:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/hss:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     networks:
       default:
@@ -104,8 +104,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_mme.sh"
     volumes:
-      - "./config-diss/mme:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/mme:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     expose:
       - "3868/udp"
@@ -130,8 +130,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_sgwc.sh"
     volumes:
-      - "./config-diss/sgwc:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/sgwc:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     expose:
       - "2123/udp"
@@ -150,8 +150,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_sgwu.sh"
     volumes:
-      - "./config-diss/sgwu:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/sgwu:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     expose:
       - "8805/udp"
@@ -170,8 +170,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_smf.sh"
     volumes:
-      - "./config-diss/smf:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/smf:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     expose:
       - "3868/udp"
@@ -196,7 +196,7 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_upf.sh"
     volumes:
-      - "./config-diss/upf:/etc/open5gs"
+      - "./config/upf:/etc/open5gs"
       - "./log:/var/log/open5gs"
 
     cap_add:
@@ -219,8 +219,8 @@ services:
       - "/bin/sh"
       - "/etc/open5gs/run_pcrf.sh"
     volumes:
-      - "./config-diss/pcrf:/etc/open5gs"
-      - "./config-diss/freeDiameter:/etc/freeDiameter"
+      - "./config/pcrf:/etc/open5gs"
+      - "./config/freeDiameter:/etc/freeDiameter"
       - "./log:/var/log/open5gs"
     networks:
        default:
