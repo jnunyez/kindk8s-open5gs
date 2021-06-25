@@ -107,6 +107,30 @@ services:
       default:
         ipv4_address: 172.30.1.20
 
+  amf:
+    image: open5gs_base:ub
+    depends_on:
+      - smf
+      - upf
+      - nrf
+      - ausf
+      - udm
+      - udr
+      - pcf
+    container_name: amf
+    entrypoint:
+      - "bin/sh"
+      - "etc/open5gs/run_amf.sh"
+    volumes:
+      - ./config/amf:/etc/open5gs
+      - ./log:/var/log/open5gs
+    expose:
+      - "38412/sctp"
+      - "7777/tcp"
+    networks:
+      default:
+        ipv4_address: 172.30.1.21
+
   udr:
     image: open5gs_base:ub
     depends_on:
