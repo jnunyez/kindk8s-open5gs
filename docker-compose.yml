@@ -71,7 +71,95 @@ services:
       - "7777/tcp"
     networks:
       default:
-        ipv4_address: 172.30.1.13
+        ipv4_address: 172.30.1.17
+
+  ausf:
+    image: open5gs_base:ub
+    depends_on:
+      - nrf
+    container_name: ausf
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_ausfm.sh"
+    volumes:
+      - ./config/ausf:/etc/open5gs
+      - ./log:/var/log/open5gs
+    expose:
+      - "7777/tcp"
+    networks:
+      default:
+        ipv4_address: 172.30.1.19
+  
+  udm:
+    image: open5gs_base:ub
+    depends_on:
+      - nrf
+    container_name: udm
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_udm.sh"
+    volumes:
+      - ./config/udm:/etc/open5gs
+      - ./log:/var/log/open5gs
+    expose:
+      - "7777/tcp"
+    networks:
+      default:
+        ipv4_address: 172.30.1.20
+
+  udr:
+    image: open5gs_base:ub
+    depends_on:
+      - nrf
+      - mongodb
+    container_name: udr
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_udr.sh"
+    volumes:
+      - ./config/udr:/etc/open5gs
+      - ./log:/var/log/open5gs
+    expose:
+      - "7777/tcp"
+    networks:
+      default:
+        ipv4_address: 172.30.1.14
+
+  pcf:
+    image: open5gs_base:ub
+    depends_on:
+      - nrf
+      - mongodb
+    container_name: pcf
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_pcf.sh"      
+    expose:
+      - "7777/tcp"
+    volumes:
+      - ./config/pcf:/etc/open5gs
+      - ./log:/var/log/open5gs
+    networks:
+      default:
+        ipv4_address: 172.30.1.15
+
+  nssf:
+    image: open5gs_base:ub
+    depends_on:
+      - nrf
+      - mongodb
+    container_name: nssf
+    entrypoint:
+      - "/bin/sh"
+      - "/etc/open5gs/run_nssf.sh"      
+    expose:
+      - "7777/tcp"
+    volumes:
+      - ./config/nssf:/etc/open5gs
+      - ./log:/var/log/open5gs
+    networks:
+      default:
+        ipv4_address: 172.30.1.16
 
   hss:
     image: open5gs_base:ub
@@ -185,7 +273,7 @@ services:
       - "7777/tcp"
     networks:
       default:
-        ipv4_address: 172.30.1.14
+        ipv4_address: 172.30.1.18
 
   upf:
     image: open5gs_base:ub

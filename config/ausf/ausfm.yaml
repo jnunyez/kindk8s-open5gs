@@ -1,0 +1,15 @@
+logger:
+    file: /var/log/open5gs/ausf.log
+
+parameter:
+
+ausf:
+    sbi:
+      - addr: 172.30.1.14
+        port: 7777
+
+nrf:
+    sbi:
+      - addr:
+          - 172.30.1.13
+        port: 7777
