@@ -8,7 +8,13 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  nfs:
+  local:
     path: /cfg
-    server: kind-control-plane.local
-    readOnly: false
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kind-worker2

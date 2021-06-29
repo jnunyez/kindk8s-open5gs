@@ -6,6 +6,7 @@ metadata:
     io.kompose.service: webui-claim1
   name: webui-claim1
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:

@@ -28,7 +28,7 @@ spec:
       containers:
         - command:
             - /bin/sh
-            - /etc/open5gs/run_webui.sh
+            - /etc/open5gs/webui/run_webui.sh
           env:
             - name: DB_URI
               value: mongodb://172.30.1.12/open5gs

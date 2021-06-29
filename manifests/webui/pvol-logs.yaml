@@ -3,12 +3,18 @@ kind: PersistentVolume
 metadata:
   name: pvol-2
 spec:
+  storageClassName: manual
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /log
-    server: kind-control-plane.local
-    readOnly: false
+  local:
+    path: /logs
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kind-worker2
