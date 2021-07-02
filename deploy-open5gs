@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
+VERSION=2.3.0
+
+kubectl delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+kubectl delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+kubectl delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+kubectl wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+kubectl wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+
+VERSION=$VERSION \
+envsubst < "$HERE/manifests/services.yaml" |
+kubectl apply -f -
+
+function d() {
+    VERSION=$VERSION \
+    COMPONENT=$1 \
+    IMAGE="localhost:5000/fedora/open5gs:2.3" \
+    envsubst < "$HERE/manifests/component.yaml" |
+    kubectl apply -f -
+}
+
+kubectl create -f "$HERE/manifests/amf-configmap.yaml"
+kubectl create -f "$HERE/manifests/nrf-configmap.yaml"
+kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
+d amf
+d nrf
+d ausf
+#d bsf
+#d hss
+#d mme
+#d nssf
+#d pcf
+#d pcrf
+#d sgwc
+#d sgwu
