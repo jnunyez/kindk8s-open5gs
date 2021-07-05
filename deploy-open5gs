@@ -26,9 +26,11 @@ function d() {
 kubectl create -f "$HERE/manifests/amf-configmap.yaml"
 kubectl create -f "$HERE/manifests/nrf-configmap.yaml"
 kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
+kubectl create -f "$HERE/manifests/udm-configmap.yaml"
 d amf
 d nrf
 d ausf
+d udm
 #d bsf
 #d hss
 #d mme
