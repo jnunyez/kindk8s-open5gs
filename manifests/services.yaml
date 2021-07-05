@@ -23,7 +23,7 @@ spec:
     app.kubernetes.io/component: 5g
   ports:
   - name: slap # S1-MME
-    protocol: TCP
+    protocol: SCTP
     targetPort: 36412
     port: 36412
   - name: gtpc # S11
@@ -50,6 +50,7 @@ metadata:
     app.kubernetes.io/managed-by: open5gs
 
 spec:
+  clusterIP: None
   type: ClusterIP
   selector:
     app.kubernetes.io/name: sgwc
@@ -155,6 +156,7 @@ metadata:
     app.kubernetes.io/managed-by: open5gs
 
 spec:
+  clusterIP: None
   type: ClusterIP
   selector:
     app.kubernetes.io/name: sgwu
@@ -186,6 +188,7 @@ metadata:
     app.kubernetes.io/managed-by: open5gs
 
 spec:
+  clusterIP: None
   type: ClusterIP
   selector:
     app.kubernetes.io/name: upf
@@ -217,6 +220,7 @@ metadata:
     app.kubernetes.io/managed-by: open5gs
 
 spec:
+  clusterIP: None
   type: ClusterIP
   selector:
     app.kubernetes.io/name: hss

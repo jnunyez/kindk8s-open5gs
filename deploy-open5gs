@@ -23,7 +23,8 @@ function d() {
     kubectl apply -f -
 }
 
-function db() {
+function c() {
+
 	MONGODB_URI=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
 	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 	#echo "MONGODB URI is: "$MONGODB_URI
@@ -32,29 +33,36 @@ function db() {
 	kubectl create -f -
 }
 
-MONGODB_URI=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
-MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
-echo "MONGODB URI is: "$MONGODB_URI
-
 kubectl create -f "$HERE/manifests/amf-configmap.yaml"
 kubectl create -f "$HERE/manifests/nrf-configmap.yaml"
 kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
 kubectl create -f "$HERE/manifests/udm-configmap.yaml"
 kubectl create -f "$HERE/manifests/nssf-configmap.yaml"
+kubectl create -f "$HERE/manifests/smf-configmap.yaml"
+kubectl create -f "$HERE/manifests/upf-configmap.yaml"
+kubectl create -f "$HERE/manifests/sgwc-configmap.yaml"
+kubectl create -f "$HERE/manifests/sgwu-configmap.yaml"
 
-db udr
-db bsf
+c udr
+c bsf
+c hss
+c mme
+c pcrf
+c pcf
 
+d sgwc
+d sgwu
+d upf
 d amf
+d smf
 d nrf
 d ausf
 d udm
 d udr
 d bsf
-#d hss
-#d mme
+d hss
+d mme
 d nssf
-#d pcf
-#d pcrf
-#d sgwc
-#d sgwu
+d pcf
+d pcrf
+
