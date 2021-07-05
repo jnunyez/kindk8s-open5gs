@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: udr
+  labels:
+    app.kubernetes.io/part-of: open5gs
+data:
+  udr.yaml: |-
+    db_uri: $MONGODB_URI
+
+
+    logger:
+        file: /var/log/open5gs/udr.log
+
+    parameter:
+
+    udr:
+        sbi:
+          - addr: 0.0.0.0
+            port: 7777
+
+    nrf:
+        sbi:
+          - name: nrf
+            port: 7777
