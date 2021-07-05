@@ -1,0 +1,54 @@
+apiVersion: v1
+data:
+  sgwu.yaml: |
+    logger:
+        file: /var/log/open5gs/sgwu.log
+        trace:
+            app: 1
+            gtpv2: 1
+            gtp: 1
+
+    parameter:
+        no_ipv6: true
+
+    sgwu:
+        gtpu:
+          - addr: 0.0.0.0
+            advertise: 0.0.0.0
+        pfcp:
+          - addr: 0.0.0.0
+
+    sgwc:
+        pfcp:
+          - name: sgwc
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-07-05T15:37:23Z"
+  labels:
+    app.kubernetes.io/part-of: open5gs
+    name: sgwu
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:sgwu.yaml: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-07-05T15:37:23Z"
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app.kubernetes.io/part-of: {}
+          f:name: {}
+    manager: kubectl-label
+    operation: Update
+    time: "2021-07-05T15:37:23Z"
+  name: sgwu
+  namespace: default
+  resourceVersion: "763072"
+  uid: 41c89ee8-6f9d-4e6f-bd4e-6e1b27ac2487
