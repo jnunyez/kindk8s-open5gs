@@ -31,6 +31,7 @@ kubectl create -f "$HERE/manifests/amf-configmap.yaml"
 kubectl create -f "$HERE/manifests/nrf-configmap.yaml"
 kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
 kubectl create -f "$HERE/manifests/udm-configmap.yaml"
+kubectl create -f "$HERE/manifests/nssf-configmap.yaml"
 
 sed --in-place \
     "s|^db_uri: .*|db_uri: $MONGODB_URI|" \
@@ -48,7 +49,7 @@ d udr
 #d bsf
 #d hss
 #d mme
-#d nssf
+d nssf
 #d pcf
 #d pcrf
 #d sgwc
