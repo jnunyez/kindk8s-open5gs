@@ -23,6 +23,15 @@ function d() {
     kubectl apply -f -
 }
 
+function db() {
+	MONGODB_URI=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
+	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
+	#echo "MONGODB URI is: "$MONGODB_URI
+	MONGODB_URI=$MONGODB_URI \
+	envsubst < "$HERE/manifests/$1-configmap.yaml" |
+	kubectl create -f -
+}
+
 MONGODB_URI=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
 MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 echo "MONGODB URI is: "$MONGODB_URI
@@ -33,20 +42,15 @@ kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
 kubectl create -f "$HERE/manifests/udm-configmap.yaml"
 kubectl create -f "$HERE/manifests/nssf-configmap.yaml"
 
-sed --in-place \
-    "s|^db_uri: .*|db_uri: $MONGODB_URI|" \
-    "$HERE/manifests/"*configmap.yaml
-
-MONGODB_URI=$MONGODB_URI \
-envsubst < "$HERE/manifests/udr-configmap.yaml" |
-kubectl create -f -
+db udr
+db bsf
 
 d amf
 d nrf
 d ausf
 d udm
 d udr
-#d bsf
+d bsf
 #d hss
 #d mme
 d nssf
