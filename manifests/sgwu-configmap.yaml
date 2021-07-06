@@ -3,24 +3,12 @@ data:
   sgwu.yaml: |
     logger:
         file: /var/log/open5gs/sgwu.log
-        trace:
-            app: 1
-            gtpv2: 1
-            gtp: 1
-
-    parameter:
-        no_ipv6: true
 
     sgwu:
         gtpu:
-          - addr: 0.0.0.0
-            advertise: 0.0.0.0
+           dev: eth0
         pfcp:
-          - addr: 0.0.0.0
-
-    sgwc:
-        pfcp:
-          - name: sgwc
+           dev: eth0
 kind: ConfigMap
 metadata:
   creationTimestamp: "2021-07-05T15:37:23Z"

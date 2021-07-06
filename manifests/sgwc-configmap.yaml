@@ -1,9 +1,16 @@
 apiVersion: v1
 data:
-  sgwc.yaml: "logger:\n    file: /var/log/open5gs/sgwc.log\n    trace:\n        app:
-    1\n        gtpv2: 1\n        gtp: 1\n\nparameter:\n    no_ipv6: true\n\nsgwc:\n
-    \   gtpc:\n      - addr: 0.0.0.0\n    pfcp:\n      - addr: 0.0.0.0\n      \nsgwu:\n
-    \   pfcp:\n      - addr: sgwu\n"
+  sgwc.yaml: |
+    logger:
+        file: /var/log/open5gs/sgwc.log
+    sgwc:
+        gtpc:
+          dev: eth0
+        pfcp:
+          dev: eth0
+    sgwu:
+        pfcp:
+          name: sgwu
 kind: ConfigMap
 metadata:
   creationTimestamp: "2021-07-05T15:34:27Z"
