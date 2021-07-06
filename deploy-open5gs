@@ -50,12 +50,13 @@ c mme
 c pcrf
 c pcf
 
-d sgwc
+
 d sgwu
+d sgwc
 d upf
+d nrf
 d amf
 d smf
-d nrf
 d ausf
 d udm
 d udr
