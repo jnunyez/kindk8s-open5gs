@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webui
+  labels:
+    app.kubernetes.io/part-of: open5gs
+data:
+  #DB_URI
+  db_uri: $MONGODB_URI
