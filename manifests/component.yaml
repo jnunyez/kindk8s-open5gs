@@ -34,10 +34,6 @@ spec:
       containers:
       - name: main
         image: $IMAGE
-        command:
-          #- tail 
-          #- -f 
-          #- /dev/null
         volumeMounts: 
           - name: ${COMPONENT}-cfg 
             mountPath: /etc/open5gs/${COMPONENT}.yaml
@@ -51,6 +47,11 @@ spec:
         env:
         - name: COMPONENT
           value: $COMPONENT
+        - name: DB_URI # uri of primary replica
+          valueFrom:
+            configMapKeyRef:
+              name: $COMPONENT
+              key: db_uri
         securityContext:
           capabilities:
             add:

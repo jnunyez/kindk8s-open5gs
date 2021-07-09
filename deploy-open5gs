@@ -33,6 +33,25 @@ function c() {
 	kubectl create -f -
 }
 
+function dw() {
+	VERSION=2.3.1 \
+	COMPONENT=$1 \
+	IMAGE="localhost:5000/webui:${VERSION}" \
+	envsubst < "$HERE/manifests/component.yaml" |
+    kubectl apply -f -
+}
+
+function cw() {
+
+	MONGODB_URIS=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
+	IFS=', ' read -r -a MONGODB_URI <<< "$MONGODB_URIS"
+	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
+	MONGODB_URI=$MONGODB_URI \
+	envsubst < "$HERE/manifests/$1-configmap.yaml" |
+	kubectl apply -f -
+}
+
+
 kubectl create -f "$HERE/manifests/amf-configmap.yaml"
 kubectl create -f "$HERE/manifests/nrf-configmap.yaml"
 kubectl create -f "$HERE/manifests/ausf-configmap.yaml"
@@ -66,4 +85,7 @@ d mme
 d nssf
 d pcf
 d pcrf
+
+cw webui
+dw webui
 
