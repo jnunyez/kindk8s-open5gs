@@ -12,7 +12,7 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in k8
 1. Deploy k8s cluster and local registry
 
    ```
-   deploycluster.sh
+   deploy-cluster
    ```
 
 2. Deploy mongodb cluster:
