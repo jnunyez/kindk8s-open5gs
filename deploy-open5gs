@@ -35,9 +35,10 @@ function c() {
 
 function dw() {
 	VERSION=2.3.1 \
+	WEBUIPORT=3000 \
 	COMPONENT=$1 \
 	IMAGE="localhost:5000/webui:${VERSION}" \
-	envsubst < "$HERE/manifests/component.yaml" |
+	envsubst < "$HERE/manifests/component-webui.yaml" |
     kubectl apply -f -
 }
 

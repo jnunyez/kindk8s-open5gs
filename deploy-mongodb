@@ -12,6 +12,7 @@ if [ ! -d "$BASE" ]; then
 fi
 
 m 'deploying MongoDB operator...'
+#kubectl create namespace mongodb
 kubectl apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
 kubectl apply --kustomize="$BASE/config/rbac/"
 kubectl apply --filename="$BASE/config/manager/manager.yaml"
@@ -26,13 +27,14 @@ if [ "$1" == -c ]; then
     kubectl wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
     kubectl delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
     kubectl wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
+    kubectl delete namespace mongodb
 fi
 
 m 'deploying... (may take some time!)'
 
 VERSION=$OPEN5GS_VERSION \
 MONGODB_VERSION=$MONGODB_VERSION \
-envsubst < "$HERE/assets/kubernetes/mongodb.yaml" |
+envsubst < "$HERE/manifests/mongodb-replicaset.yaml" |
 kubectl apply -f -
 
 PHASE=

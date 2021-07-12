@@ -32,9 +32,11 @@ spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
       containers:
-      - name: main 
+      - name: ${COMPONENT}
+        ports:
+        - containerPort: $WEBUIPORT
+          hostPort: $WEBUIPORT
         image: $IMAGE
-        imagePullPolicy: Always
         volumeMounts: 
           - name: ${COMPONENT}-cfg 
             mountPath: /etc/open5gs/${COMPONENT}.yaml
@@ -44,9 +46,15 @@ spec:
             subPath: ${COMPONENT}.conf
           - name: tls
             mountPath: /etc/tls
+        imagePullPolicy: Always
         env:
-          - name: COMPONENT
-            value: $COMPONENT
+        - name: COMPONENT
+          value: $COMPONENT
+        - name: DB_URI # uri of primary replica
+          valueFrom:
+            configMapKeyRef:
+              name: $COMPONENT
+              key: db_uri
         securityContext:
           capabilities:
             add:

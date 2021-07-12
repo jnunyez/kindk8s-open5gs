@@ -14,7 +14,7 @@ fi
 # now we create cluster with the local registry envabled
 kind create cluster --config=kind-cluster.yaml
 
-docker network connect "kind" "${reg_name}" || true
+#docker network connect "kind" "${reg_name}" || true
 
 # Document the local registry
 # https://github.com/kubernetes/enhancements/tree/master/keps/sig-cluster-lifecycle/generic/1755-communicating-a-local-registry

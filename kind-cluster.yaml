@@ -7,14 +7,14 @@ containerdConfigPatches:
 nodes:
 - role: control-plane
 - role: worker
-  extraMounts:
-    - hostPath: ./config
-      containerPath: /cfg
-    - hostPath: ./logs
-      containerPath: /logs
+  extraPortMappings:
+  - containerPort: 3000
+    hostPort: 3000
 - role: worker
-  extraMounts:
-    - hostPath: ./cfg
-      containerPath: /cfg
-    - hostPath: ./logs
-      containerPath: /logs
+  extraPortMappings:
+  - containerPort: 3000
+    hostPort: 3001
+- role: worker
+  extraPortMappings:
+  - containerPort: 3000
+    hostPort: 3002
