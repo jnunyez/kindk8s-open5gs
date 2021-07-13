@@ -8,6 +8,7 @@ data:
   amf.yaml: |
     logger:
       file: /var/log/open5gs/amf.log
+      level: debug
 
     parameter:
       no_ipv6: true
@@ -16,7 +17,6 @@ data:
       sbi:
         - addr: 0.0.0.0
           port: 7777
-          advertise: amf
       ngap:
         - addr: 0.0.0.0
       guami:
