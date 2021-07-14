@@ -15,10 +15,10 @@ data:
 
     amf:
       sbi:
-        - addr: 0.0.0.0
+        - dev: eth0
           port: 7777
       ngap:
-        - addr: 0.0.0.0
+        - dev: eth0
       guami:
         - plmn_id:
             mcc: 001

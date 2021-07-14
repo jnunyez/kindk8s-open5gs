@@ -16,7 +16,7 @@ data:
 
     udr:
         sbi:
-          - addr: 0.0.0.0
+          - dev: eth0
             port: 7777
 
     nrf:

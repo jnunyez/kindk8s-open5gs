@@ -14,7 +14,7 @@ data:
 
     nssf:
         sbi:
-          - addr: 0.0.0.0
+          - dev: eth0
             port: 7777
         nsi:
           - name: nrf
