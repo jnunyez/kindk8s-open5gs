@@ -2,23 +2,19 @@ apiVersion: v1
 data:
   upf.yaml: |
     logger:
-        file: /var/log/open5gs/ugf.log
-        trace:
-            app: 1
-            diameter: 1
-            gtpv2: 1
-            gtp: 1
+        file: /var/log/open5gs/upf.log
+        level: debug
 
     parameter:
         no_ipv6: true
 
     upf:
         pfcp:
-          - addr: 0.0.0.0
+          - dev: eth0
         gtpu:
-          - addr: 0.0.0.0
+          - dev: eth0
         subnet:
-          - addr: 45.45.0.1/16
+          - addr: 45.45.0.0/16
             dev: ogstun
             dnn: internet
 kind: ConfigMap
