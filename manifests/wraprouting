@@ -18,4 +18,4 @@ iptables -A INPUT -i ogstun -j ACCEPT;
 
 tail -f /dev/null
 
-#exec /bin/open5gs
+exec /bin/open5gs
