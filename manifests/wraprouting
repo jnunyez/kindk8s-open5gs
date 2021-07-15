@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-echo "Do my special routing initialization then run the regular entrypoint"
+echo "Do upf routing initialization then run open5gs entrypoint"
  
 dnf -y install iproute \
 iptables
@@ -15,7 +15,5 @@ sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward";
 
 iptables -t nat -A POSTROUTING -s 45.45.0.0/16 ! -o ogstun -j MASQUERADE;
 iptables -A INPUT -i ogstun -j ACCEPT;
-
-tail -f /dev/null
 
 exec /bin/open5gs

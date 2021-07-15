@@ -82,6 +82,7 @@ metadata:
     app.kubernetes.io/managed-by: open5gs
 
 spec:
+  clusterIP: None
   type: ClusterIP
   selector:
     app.kubernetes.io/name: smf

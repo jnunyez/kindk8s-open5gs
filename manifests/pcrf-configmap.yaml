@@ -133,7 +133,7 @@ data:
     = \"2001:200:903:2::202:1\";\n#  TLS_Prio = \"NORMAL\";\n#  Realm = \"realm.net\";
     # Reject the peer if it does not advertise this realm.\n# Examples:\n#ConnectPeer
     = \"aaa.wide.ad.jp\";\n#ConnectPeer = \"old.diameter.serv\" { TcTimer = 60; TLS_old_method;
-    No_SCTP; Port=3868; } ;\nConnectPeer = \"upf.localdomain\" { ConnectTo = \"smf\";
+    No_SCTP; Port=3868; } ;\nConnectPeer = \"smf.localdomain\" { ConnectTo = \"smf\";
     No_TLS; };\n\n##############################################################\n"
   pcrf.yaml: |
     db_uri: $MONGODB_URI
