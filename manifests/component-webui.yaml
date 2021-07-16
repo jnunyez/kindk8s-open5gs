@@ -35,7 +35,7 @@ spec:
       - name: ${COMPONENT}
         ports:
         - containerPort: $WEBUIPORT
-          hostPort: $WEBUIPORT
+          #hostPort: $WEBUIPORT
         image: $IMAGE
         volumeMounts: 
           - name: ${COMPONENT}-cfg 
