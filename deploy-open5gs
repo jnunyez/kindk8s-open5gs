@@ -3,7 +3,7 @@ set -e
 
 HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 
-VERSION=2.3.0
+VERSION=2.3.2
 
 kubectl delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
 kubectl delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
@@ -18,7 +18,7 @@ kubectl apply -f -
 function d() {
     VERSION=$VERSION \
     COMPONENT=$1 \
-    IMAGE="localhost:5000/fedora/open5gs:2.3" \
+    IMAGE="localhost:5000/open5gs:2.3.2" \
     envsubst < "$HERE/manifests/component.yaml" |
     kubectl apply -f -
 }
@@ -27,7 +27,7 @@ function du() {
 #testing UPF
     VERSION=$VERSION \
     COMPONENT=$1 \
-    IMAGE="localhost:5000/fedora/open5gs:2.3" \
+    IMAGE="localhost:5000/open5gs:2.3.2" \
     envsubst < "$HERE/manifests/$1-component.yaml" |
     kubectl apply -f -
 }
@@ -108,4 +108,3 @@ d smf
 
 cw webui
 dw webui
-
