@@ -7,14 +7,8 @@ containerdConfigPatches:
 nodes:
 - role: control-plane
 - role: worker
-  extraPortMappings:
-  - containerPort: 3000
-    hostPort: 3000
+  extraMounts:
+  - hostPath: /dev/bus/usb
+    containerPath: /dev/bus/usb
 - role: worker
-  extraPortMappings:
-  - containerPort: 3000
-    hostPort: 3001
 - role: worker
-  extraPortMappings:
-  - containerPort: 3000
-    hostPort: 3002
