@@ -11,10 +11,10 @@ parameter:
 
 upf:
     pfcp:
-      - addr: 172.30.1.8
+      - addr: 0.0.0.0
     gtpu:
-      - addr: 172.30.1.8
-        advertise: 172.30.1.8
+      - addr: 0.0.0.0
+        advertise: 0.0.0.0
     subnet:
       - addr: 45.45.0.0/16
         dev: ogstun
