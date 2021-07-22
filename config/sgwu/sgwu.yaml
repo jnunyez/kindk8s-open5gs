@@ -10,11 +10,11 @@ parameter:
 
 sgwu:
     gtpu:
-      - addr: 0.0.0.0
-        advertise: 0.0.0.0
+      - addr: 172.30.1.7
+        advertise: 172.30.1.7
     pfcp:
-      - addr: 0.0.0.0
+      - addr: 172.30.1.7
 
 sgwc:
     pfcp:
-      - name: sgwc
+      - addr: 172.30.1.6

@@ -6,14 +6,14 @@ parameter:
 smf:
     freeDiameter: /open5gs/install/etc/freeDiameter/smf.conf
     sbi:
-      - addr: 0.0.0.0
+      - addr: 172.30.1.14
         port: 7777
     gtpc:
-      - addr: 0.0.0.0
+      - addr: 172.30.1.14
     gtpu:
-      - addr: 0.0.0.0
+      - addr: 172.30.1.14
     pfcp:
-      - addr: 0.0.0.0
+      - addr: 172.30.1.14
     subnet:
       - addr: 45.45.0.1/24
         dnn: internet
@@ -25,10 +25,10 @@ smf:
 
 nrf:
     sbi:
-      - name:
+      - addr:
           - 172.30.1.13
         port: 7777
 
 upf:
     pfcp:
-      - name: upf
+      - addr: 172.30.1.8
