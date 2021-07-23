@@ -71,7 +71,6 @@ kubectl create -f "$HERE/manifests/nssf-configmap.yaml"
 
 kubectl create -f "$HERE/manifests/upf-configmap.yaml"
 kubectl create -f "$HERE/manifests/wraprouting-configmap.yaml"
-#kubectl create configmap wraprouting --from-file="$HERE/manifests/wraprouting"
 
 kubectl create -f "$HERE/manifests/sgwc-configmap.yaml"
 kubectl create -f "$HERE/manifests/sgwu-configmap.yaml"
