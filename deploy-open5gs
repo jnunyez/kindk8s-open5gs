@@ -18,7 +18,7 @@ kubectl apply -f -
 function d() {
     VERSION=$VERSION \
     COMPONENT=$1 \
-    IMAGE="localhost:5000/open5gs:2.3.2" \
+    IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
     envsubst < "$HERE/manifests/component.yaml" |
     kubectl apply -f -
 }
@@ -27,7 +27,7 @@ function du() {
 #testing UPF
     VERSION=$VERSION \
     COMPONENT=$1 \
-    IMAGE="localhost:5000/open5gs:2.3.2" \
+    IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
     envsubst < "$HERE/manifests/$1-component.yaml" |
     kubectl apply -f -
 }
@@ -46,7 +46,7 @@ function dw() {
 	VERSION=2.3.1 \
 	WEBUIPORT=3000 \
 	COMPONENT=$1 \
-	IMAGE="localhost:5000/webui:${VERSION}" \
+	IMAGE="quay.io/jnunez/webui:${VERSION}" \
 	envsubst < "$HERE/manifests/component-webui.yaml" |
     kubectl apply -f -
 }
