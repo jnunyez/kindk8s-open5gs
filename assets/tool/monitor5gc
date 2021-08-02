@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
+POD=$(kubectl get pods -l app.kubernetes.io/name=$1 --output=jsonpath="{.items[0].metadata.name}")
+
+touch $HERE/$1.fifo
+
+kubectl exec  $POD -- dnf -y install tcpdump
+
+kubectl exec  $POD -- /usr/sbin/tcpdump -s 0 -n -w - -U -i eth0 > $HERE/$1.fifo
