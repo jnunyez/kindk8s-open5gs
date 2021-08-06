@@ -1,6 +1,8 @@
 #!/bin/sh
 set -o errexit
 
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
 # create insecure registry container unless it already exists
 #reg_name='kind-registry'
 #reg_port='5000'
@@ -12,8 +14,9 @@ set -o errexit
 #fi
 #we rely on pub registry now
 
+
 # now we create cluster with the local registry envabled
-kind create cluster --config=kind-cluster.yaml
+kind create cluster --config=$HERE/manifests/kind/kind-cluster.yaml
 
 #docker network connect "kind" "${reg_name}" || true
 

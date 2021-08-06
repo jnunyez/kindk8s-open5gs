@@ -10,5 +10,7 @@ nodes:
   extraMounts:
   - hostPath: /dev/bus/usb
     containerPath: /dev/bus/usb
+  - hostPath: /sys/devices/system/cpu
+    containerPath: /sys/devices/system/cpu
 - role: worker
 - role: worker
