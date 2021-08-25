@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
+
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+BASE=$HERE/work/multus-cni
+
+if [ ! -d "$BASE" ]; then
+	git clone https://github.com/k8snetworkplumbingwg/multus-cni.git "$BASE"
+fi
+
+cat $HERE/work/multus-cni/images/multus-daemonset.yml | kubectl apply -f - 
+#does not work in kind
