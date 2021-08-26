@@ -15,19 +15,25 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in k8
    deploy-cluster
    ```
 
-2. Deploy mongodb community operator. A mongodb cluster with three replicas that will act as backend for the open5gs core network.
+2. Deploy sdn for k8s based on flannel and multus in this example:
+
+   ```console
+   deploy-sdn
+   ```   
+
+3. Deploy mongodb community operator. A mongodb cluster with three replicas that will act as backend for the open5gs core network.
 
    ```console
    deploy-mongodb
    ```
 
-3. Deploy certificates for open5gs components requiring diameter authentication. The HSS, MME, PCRF and the SMF are the entities requiring a certifacate that use diameter AAA protocol. The command below deploys cert-manager operator to ultimately generate the required secrets for the HSS, MME, PCRF, and SMF.
+4. Deploy certificates for open5gs components requiring diameter authentication. The HSS, MME, PCRF and the SMF are the entities requiring a certifacate that use diameter AAA protocol. The command below deploys cert-manager operator to ultimately generate the required secrets for the HSS, MME, PCRF, and SMF.
 
    ```console
    deploy-certificates
    ``` 
 
-4. Deploy open5gs components.
+5. Deploy open5gs components.
 
    ```console
    deploy-open5gs
@@ -36,6 +42,41 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in k8
 
 ## Deployment Strategy
 
+### Deploying the Cluster
+
+Cluster is based on one controller and three workers deployed using docker containers. Assure the default CNI is disabled meaning that kindnetd is disabled. In the `kind-config.yaml` file:
+
+	```
+    networking:
+	#the default cni will not be installed
+	  disableDefaultCNI: true
+    ```
+
+Assure the cni plugins are mounted in /opt/cni/bin in each node in the cluster container for subsequent use. Build the CNI plugins in your localhost:
+
+	```console
+	git clone https://github.com/containernetworking/plugins.git work/plugins/
+   	cd plugins
+    ./build_linux.sh
+    ```
+
+
+Add flannel to the list of CNI plugins:
+
+   ```console
+   git clone https://github.com/flannel-io/cni/plugin work/flannel
+   cd work/flannel
+   go build
+   mv cni/plugin work/plugins/bin/flannel
+   ```
+
+Mount the CNI plugins:
+
+	```
+ 	extraMounts:
+  	  - hostPath: $HERE/work/plugins/bin
+        containerPath: /opt/cni/bin
+    ```
 
 ### Certificates and Diameter
 
