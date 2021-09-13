@@ -3,8 +3,13 @@ set -e
 
 HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 
+. "$HERE/_functions"
+
+m 'CNI: nodes in the cluster should be in a NotReady state'
 
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+m 'flannel deployed' "$GREEN"
 
 BASE=$HERE/work/multus-cni
 
@@ -13,4 +18,6 @@ if [ ! -d "$BASE" ]; then
 fi
 
 cat $HERE/work/multus-cni/images/multus-daemonset.yml | kubectl apply -f - 
-#does not work in kind
+
+m 'multus deployed' "$GREEN"
+m 'SDN deployed: nodes in the cluster should be in ready state'
