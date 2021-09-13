@@ -9,7 +9,8 @@ networking:
 nodes:
 - role: control-plane
   extraMounts:
-  - hostPath: $HERE/work/plugins/bin
+  #- hostPath: /home/jnunez/kindk8s-open5gs/work/plugins/bin
+  - hostPath: $SPATH/work/plugins/bin
     containerPath: /opt/cni/bin
 - role: worker
   extraMounts:
@@ -17,13 +18,13 @@ nodes:
     containerPath: /dev/bus/usb
   - hostPath: /sys/devices/system/cpu
     containerPath: /sys/devices/system/cpu
-  - hostPath: $HERE/work/plugins/bin
+  - hostPath: $SPATH/work/plugins/bin
     containerPath: /opt/cni/bin
 - role: worker
   extraMounts:
-  - hostPath: $HERE/work/plugins/bin
+  - hostPath: $SPATH/work/plugins/bin
     containerPath: /opt/cni/bin
 - role: worker
   extraMounts:
-  - hostPath: $HERE/work/plugins/bin
+  - hostPath: $SPATH/work/plugins/bin
     containerPath: /opt/cni/bin

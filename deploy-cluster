@@ -3,10 +3,15 @@ set -o errexit
 
 HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")") 
 
+SCRIPT=$(readlink -f $0)
+SPATH=`dirname $SCRIPT`
+
+echo "path is "$SPATH
+
 HERE=$HERE \
+SPATH=$SPATH \
 envsubst < "$HERE/manifests/kind/kind-cluster.yaml" |
 kind create cluster --config=-
-#kind create cluster --config=$HERE/manifests/kind/kind-cluster.yaml
 
 #prepare nodes
 for NODE in kind-control-plane kind-worker kind-worker2 kind-worker3 
