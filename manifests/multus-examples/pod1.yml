@@ -3,9 +3,13 @@ kind: Pod
 metadata:
   name: samplepod1
   annotations:
-    k8s.v1.cni.cncf.io/networks: data-plane-vlan
+    k8s.v1.cni.cncf.io/networks: '[
+      { "name": "user-plane-vlan",
+        "ips": [ "192.168.3.201/24" ],
+        "gateway": ["192.168.3.1"]
+      }]'
 spec:
   containers:
-  - name: samplepod
+  - name: samplepod1
     command: ["/bin/ash", "-c", "trap : TERM INT; sleep infinity & wait"]
     image: alpine
