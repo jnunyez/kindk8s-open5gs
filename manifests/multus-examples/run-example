@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
+. "$HERE/../../_functions"
+
+m 'Multus: deploy network attachment definition'
+
+kubectl apply -f netatdef.yml
+
+kubectl apply -f pod1.yml
+m 'sample pod 1 deployed' "$GREEN"
+
+kubectl apply -f pod2.yml
+m 'sample pod 2 deployed' "$GREEN"

@@ -5,20 +5,24 @@ metadata:
 spec:
   config: '{
       "cniVersion": "0.3.1",
-      "type": "macvlan",
-      "capabilities": { "ips": true},
-      "master": "eth0",
-      "mode": "bridge",
-      "ipam": {
-        "type": "static",
-        "subnet": "192.168.3.0/24",
-        "rangeStart": "192.168.3.200",
-        "rangeEnd": "192.168.3.216",
-        "routes": [
-          { 
-            "dst": "0.0.0.0/0",
-            "gw": "192.168.3.1" 
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true},
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "static",
+            "subnet": "192.168.3.0/24",
+            "rangeStart": "192.168.3.200",
+            "rangeEnd": "192.168.3.216",
+            "routes": [
+              { 
+                "dst": "0.0.0.0/0",
+                "gw": "192.168.3.1" 
+              }   
+            ]
           }
-        ],
-      }
+        }
+      ]
   }'

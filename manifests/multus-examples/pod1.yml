@@ -3,11 +3,13 @@ kind: Pod
 metadata:
   name: samplepod1
   annotations:
-    k8s.v1.cni.cncf.io/networks: '[
-      { "name": "user-plane-vlan",
-        "ips": [ "192.168.3.201/24" ],
-        "gateway": ["192.168.3.1"]
-      }]'
+    k8s.v1.cni.cncf.io/networks: '[ 
+            { "name": "user-plane-vlan", 
+              "interface": "u-p",
+              "ips": ["192.168.3.201/24"],
+              "mac": "c2:b0:57:49:47:f1",
+              "gateway": [ "192.168.3.1" ]
+            }]'
 spec:
   containers:
   - name: samplepod1

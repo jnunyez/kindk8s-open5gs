@@ -16,6 +16,6 @@ kind create cluster --config=-
 #prepare nodes
 for NODE in kind-control-plane kind-worker kind-worker2 kind-worker3 
 do
-	docker exec -it $NODE ip link add data-plane-vlan link eth0 type macvlan mode bridge 
-	docker exec -it $NODE ip link set data-plane-vlan up
+	docker exec -it $NODE ip link add user-plane-vlan link eth0 type macvlan mode bridge 
+	docker exec -it $NODE ip link set user-plane-vlan up
 done
