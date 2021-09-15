@@ -1,3 +1,6 @@
+---
+# This net-attach-def define a user-plane-vlan configuration 
+# +ip cababilities to specify the ip address in pod annotation
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -20,6 +23,37 @@ spec:
               { 
                 "dst": "0.0.0.0/0",
                 "gw": "192.168.3.1" 
+              }   
+            ]
+          }
+        }
+      ]
+  }'
+---
+# This net-attach-def define a user-plane-vlan configuration 
+# +ip cababilities to specify the ip address in pod annotation
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: ctrl-plane-vlan
+spec:
+  config: '{
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true},
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "static",
+            "subnet": "192.168.4.0/24",
+            "rangeStart": "192.168.4.200",
+            "rangeEnd": "192.168.4.216",
+            "routes": [
+              { 
+                "dst": "0.0.0.0/0",
+                "gw": "192.168.4.1" 
               }   
             ]
           }
