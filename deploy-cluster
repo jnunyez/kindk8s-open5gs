@@ -18,4 +18,6 @@ for NODE in kind-control-plane kind-worker kind-worker2 kind-worker3
 do
 	docker exec -it $NODE ip link add user-plane-vlan link eth0 type macvlan mode bridge 
 	docker exec -it $NODE ip link set user-plane-vlan up
+	docker exec -it $NODE ip link add ctrl-plane-vlan link eth0 type macvlan mode bridge
+	docker exec -it $NODE ip link set ctrl-plane-vlan up
 done
