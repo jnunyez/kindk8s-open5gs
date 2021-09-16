@@ -46,37 +46,37 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in k8
 
 Cluster is based on one controller and three workers deployed using docker containers. Assure the default CNI is disabled meaning that kindnetd is disabled. In the `kind-config.yaml` file:
 
-	```
+```console
     networking:
 	#the default cni will not be installed
 	  disableDefaultCNI: true
-    ```
+```
 
 Assure the cni plugins are mounted in /opt/cni/bin in each node in the cluster container for subsequent use. Build the CNI plugins in your localhost:
 
-	```console
+```shell
 	git clone https://github.com/containernetworking/plugins.git work/plugins/
-   	cd plugins
+   cd plugins
     ./build_linux.sh
-    ```
+```
 
 
-Add flannel to the list of CNI plugins:
+We use Flannel as default CNI plugin and it is not present in the repo above. Compile flannel CNI binary and add flannel to the list of CNI plugins:
 
-   ```console
+```shell
    git clone https://github.com/flannel-io/cni/plugin work/flannel
    cd work/flannel
    go build
    mv cni/plugin work/plugins/bin/flannel
-   ```
+```
 
 Mount the CNI plugins:
 
-	```
+```console
  	extraMounts:
   	  - hostPath: $HERE/work/plugins/bin
         containerPath: /opt/cni/bin
-    ```
+```
 
 ### Certificates and Diameter
 
