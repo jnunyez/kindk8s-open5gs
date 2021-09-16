@@ -5,12 +5,8 @@ HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 
 . "$HERE/../../_functions"
 
-m 'Multus: deploy network attachment definition'
+m 'Multus: deploy network attachment definition' "$GREEN"
 
-kubectl apply -f netatdef.yml
+kubectl apply -f example.yml
 
-kubectl apply -f pod1.yml
-m 'sample pod 1 deployed' "$GREEN"
-
-kubectl apply -f pod2.yml
-m 'sample pod 2 deployed' "$GREEN"
+m 'deploy samplepods' "$GREEN"

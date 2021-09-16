@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+
+. "$HERE/../../_functions"
+
+m 'Multus: destroy network attachment definition' "$GREEN"
+
+kubectl delete -f example.yml
+
+m 'sample pod 1 destroyed' "$GREEN"
+m 'sample pod 2 destroyed' "$GREEN"
