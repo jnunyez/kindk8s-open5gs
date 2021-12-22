@@ -3,6 +3,7 @@ kind: Issuer
 
 metadata:
   name: selfsigned-issuer
+  namespace: $CERT_NS
   labels:
     app.kubernetes.io/name: selfsigned-issuer
     app.kubernetes.io/instance: selfsigned-issuer

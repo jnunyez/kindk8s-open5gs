@@ -3,6 +3,7 @@ kind: certificate
 
 metadata:
   name: $COMPONENT
+  namespace: $OPEN5GS_CERT_NS
   labels:
     app.kubernetes.io/name: $COMPONENT
     app.kubernetes.io/instance: $COMPONENT

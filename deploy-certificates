@@ -1,32 +1,37 @@
 #!/bin/bash
 set -e
 
-HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+HERE=$( cd "$(dirname "$0")" ; pwd -P )
 . "$HERE/_env"
 
-m 'deploying Cert-Manager operator...'
+
+m 'deploying cert-manager operator...'
 kubectl apply --filename="https://github.com/jetstack/cert-manager/releases/download/v$CERT_MANAGER_VERSION/cert-manager.yaml"
-POD=$(kubectl get pods --namespace=cert-manager --selector=app=webhook --output=jsonpath={.items[0].metadata.name})
-kubectl wait "pods/$POD" --namespace=cert-manager --for=condition=ContainersReady
+POD=$(oc get pods --namespace=cert-manager --selector=app=webhook --output=jsonpath="{.items[0].metadata.name}")
+oc wait "pods/$POD" --namespace=cert-manager --for=condition=ContainersReady
 
 if [ "$1" == -c ]; then
     m 'cleaning up...'
-    kubectl delete issuers --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-    kubectl delete certificates --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-    kubectl wait issuers --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
-    kubectl wait certificates --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+    oc delete issuers --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+    oc delete certificates --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+    oc wait issuers --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+    oc wait certificates --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
     # Cert-Manager will never automatically delete secrets!
-    kubectl delete secrets hss --ignore-not-found=true
-    kubectl delete secrets mme --ignore-not-found=true
-    kubectl delete secrets pcrf --ignore-not-found=true
-    kubectl delete secrets smf --ignore-not-found=true
+    oc delete secrets hss -n $OPEN5GS_CERT_NS --ignore-not-found=true
+    oc delete secrets mme -n $OPEN5GS_CERT_NS --ignore-not-found=true
+    oc delete secrets pcrf -n $OPEN5GS_CERT_NS --ignore-not-found=true
+    oc delete secrets smf -n $OPEN5GS_CERT_NS --ignore-not-found=true
+    oc delete ns $OPEN5GS_CERT_NS
 fi
 
 m 'deploying issuer...'
 
+oc create ns $OPEN5GS_CERT_NS
+
 VERSION=$OPEN5GS_VERSION \
+CERT_NS=$OPEN5GS_CERT_NS \
 envsubst < "$HERE/manifests/issuer.yaml" |
-kubectl apply -f -
+oc apply -f -
 
 m 'deploying certificates...'
 
@@ -34,7 +39,7 @@ function d() {
     VERSION=$OPEN5GS_VERSION \
     COMPONENT=$1 \
     envsubst < "$HERE/manifests/certificate.yaml" |
-    kubectl apply -f -
+    oc apply -f -
 }
 
 d hss
