@@ -1,6 +1,7 @@
 
 # Namespaces
 OPEN5GS_CERT_NS=open5gs-certs
+OPEN5GS_MONGO_NS=mongodb
 
 # Versions
 OPEN5GS_VERSION=2.3.2

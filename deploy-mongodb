@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+HERE=$( cd "$(dirname "$0")" ; pwd -P )
 . "$HERE/_env"
 
 BASE=$HERE/work/mongodb-kubernetes-operator
@@ -12,13 +12,14 @@ if [ ! -d "$BASE" ]; then
 fi
 
 m 'deploying MongoDB operator...'
-#kubectl create namespace mongodb
-kubectl apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
-kubectl apply --kustomize="$BASE/config/rbac/"
-kubectl apply --filename="$BASE/config/manager/manager.yaml"
-kubectl wait deployments/mongodb-kubernetes-operator --for=condition=Available
-POD=$(kubectl get pods --selector=name=mongodb-kubernetes-operator --output=jsonpath={.items[0].metadata.name})
-kubectl wait "pods/$POD" --for=condition=ContainersReady
+oc create namespace $OPEN5GS_MONGO_NS
+oc apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
+oc apply --kustomize="$BASE/config/rbac/"
+oc apply --filename="$BASE/deploy/openshift/operator_openshift.yaml"
+oc wait deployments/mongodb-kubernetes-operator --for=condition=Available
+echo "get pods falla"
+POD=$(oc get pods --selector=name=mongodb-kubernetes-operator --output=jsonpath="{.items[0].metadata.name}")
+oc wait "pods/$POD" --for=condition=ContainersReady
 
 if [ "$1" == -c ]; then
     m 'cleaning up...'
@@ -27,19 +28,20 @@ if [ "$1" == -c ]; then
     kubectl wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
     kubectl delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
     kubectl wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
-    kubectl delete namespace mongodb
+    kubectl delete namespace $OPEN5GS_MONGO_NS
 fi
 
 m 'deploying... (may take some time!)'
 
 VERSION=$OPEN5GS_VERSION \
 MONGODB_VERSION=$MONGODB_VERSION \
+MONGO_NS=$OPEN5GS_MONGO_NS \
 envsubst < "$HERE/manifests/mongodb-replicaset.yaml" |
 kubectl apply -f -
 
 PHASE=
 while [ "$PHASE" != Running ]; do
-    PHASE=$(kubectl get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.phase})
+    PHASE=$(oc get mongodbcommunity open5gs-mongodb --output=jsonpath="{.status.phase}")
     echo -n .
     sleep 1
 done

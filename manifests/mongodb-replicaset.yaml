@@ -4,6 +4,7 @@ kind: MongoDBCommunity
 
 metadata:
   name: open5gs-mongodb
+  name: $MONGO_NS
   labels:
     app.kubernetes.io/name: open5gs-mongodb
     app.kubernetes.io/instance: open5gs-mongodb
