@@ -3,6 +3,7 @@ set -e
 
 HERE=$( cd "$(dirname "$0")" ; pwd -P )
 . "$HERE/_env"
+. "$HERE/_functions"
 
 BASE=$HERE/work/mongodb-kubernetes-operator
 
@@ -12,23 +13,24 @@ if [ ! -d "$BASE" ]; then
 fi
 
 m 'deploying MongoDB operator...'
-oc create namespace $OPEN5GS_MONGO_NS
+if ! oc get namespace "$OPEN5GS_MONGO_NS"
+then
+  oc create namespace "$OPEN5GS_MONGO_NS"
+fi
 oc apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
 oc apply --kustomize="$BASE/config/rbac/"
-oc apply --filename="$BASE/deploy/openshift/operator_openshift.yaml"
+oc apply --filename="$HERE/manifests/operator_openshift.yaml" 
 oc wait deployments/mongodb-kubernetes-operator --for=condition=Available
-echo "get pods falla"
 POD=$(oc get pods --selector=name=mongodb-kubernetes-operator --output=jsonpath="{.items[0].metadata.name}")
 oc wait "pods/$POD" --for=condition=ContainersReady
 
 if [ "$1" == -c ]; then
     m 'cleaning up...'
-    kubectl delete mongodbcommunity --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-    kubectl wait statefulsets --selector=app=open5gs-mongodb-svc --for=delete || true
-    kubectl wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
-    kubectl delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
-    kubectl wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
-    kubectl delete namespace $OPEN5GS_MONGO_NS
+    oc delete mongodbcommunity --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+    oc wait statefulsets --selector=app=open5gs-mongodb-svc --for=delete || true
+    oc wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
+    oc delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
+    oc wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
 fi
 
 m 'deploying... (may take some time!)'

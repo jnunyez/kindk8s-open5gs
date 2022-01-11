@@ -4,7 +4,6 @@ kind: MongoDBCommunity
 
 metadata:
   name: open5gs-mongodb
-  name: $MONGO_NS
   labels:
     app.kubernetes.io/name: open5gs-mongodb
     app.kubernetes.io/instance: open5gs-mongodb
@@ -14,8 +13,8 @@ metadata:
 
 spec:
   type: ReplicaSet
-  members: 3
-  version: "4.4.6"
+  members: 1
+  version: $MONGODB_VERSION
   security:
     authentication:
       modes: ["SCRAM-SHA-1"]
@@ -38,6 +37,15 @@ spec:
   # The defaults are 10GB persistent volume claims
   statefulSet:
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: feature.node.kubernetes.io/open5gs
+                operator: In
+                values:
+                - "true"
       volumeClaimTemplates:
       - metadata:
           name: data-volume
@@ -65,7 +73,6 @@ spec:
           resources:
             requests:
               storage: 500Mi
-
 ---
 apiVersion: v1
 kind: Secret
