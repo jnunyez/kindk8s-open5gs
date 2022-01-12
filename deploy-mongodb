@@ -13,13 +13,15 @@ if [ ! -d "$BASE" ]; then
 fi
 
 m 'deploying MongoDB operator...'
+
 if ! oc get namespace "$OPEN5GS_MONGO_NS"
 then
   oc create namespace "$OPEN5GS_MONGO_NS"
 fi
+
 oc apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
 oc apply --kustomize="$BASE/config/rbac/"
-oc apply --filename="$HERE/manifests/operator_openshift.yaml" 
+oc apply --filename="$HERE/manifests/operator_openshift.yaml"
 oc wait deployments/mongodb-kubernetes-operator --for=condition=Available
 POD=$(oc get pods --selector=name=mongodb-kubernetes-operator --output=jsonpath="{.items[0].metadata.name}")
 oc wait "pods/$POD" --for=condition=ContainersReady
@@ -31,15 +33,17 @@ if [ "$1" == -c ]; then
     oc wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
     oc delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
     oc wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
+    oc delete persistentvolume --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
 fi
 
 m 'deploying... (may take some time!)'
+oc apply -f "$HERE/manifests/5gs-vol.yaml"
 
 VERSION=$OPEN5GS_VERSION \
 MONGODB_VERSION=$MONGODB_VERSION \
 MONGO_NS=$OPEN5GS_MONGO_NS \
 envsubst < "$HERE/manifests/mongodb-replicaset.yaml" |
-kubectl apply -f -
+oc apply -f -
 
 PHASE=
 while [ "$PHASE" != Running ]; do

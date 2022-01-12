@@ -57,6 +57,7 @@ spec:
             app.kubernetes.io/managed-by: open5gs
         spec:
           accessModes: ["ReadWriteOnce"]
+          storageClassName: "nfs-altreg"
           resources:
             requests:
               storage: 1Gi
@@ -70,6 +71,7 @@ spec:
             app.kubernetes.io/managed-by: open5gs
         spec:
           accessModes: ["ReadWriteOnce"]
+          storageClassName: "nfs-altreg"
           resources:
             requests:
               storage: 500Mi
