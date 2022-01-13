@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+HERE=$( cd "$(dirname "$0")" ; pwd -P )
+. "$HERE/_env"
+. "$HERE/_functions"
+
+BASE=$HERE/work/mongodb-kubernetes-operator
+
+if [ ! -d "$BASE" ]; then
+    m 'cloning repository...'
+    git clone https://github.com/mongodb/mongodb-kubernetes-operator.git "$BASE" --depth 1
+fi
+
+m 'cleaning up...'
+oc delete mongodbcommunity --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+oc wait statefulsets --selector=app=open5gs-mongodb-svc --for=delete || true
+oc wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
+oc delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
+oc wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
+oc delete persistentvolume --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
