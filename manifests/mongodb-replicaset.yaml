@@ -37,6 +37,23 @@ spec:
   # The defaults are 10GB persistent volume claims
   statefulSet:
     spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: open5gs-mongodb
+        selector:
+          matchLabels:
+            app.kubernetes.io/name: open5gs-mongodb
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: feature.node.kubernetes.io/open5gs
+                    operator: In
+                    values:
+                      - "true"
       volumeClaimTemplates:
       - metadata:
           name: data-volume

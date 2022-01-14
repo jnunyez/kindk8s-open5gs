@@ -27,7 +27,7 @@ spec:
             - matchExpressions:
               - key: feature.node.kubernetes.io/open5gs
                 operator: In
-                values: 
+                values:
                 - "true"
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
