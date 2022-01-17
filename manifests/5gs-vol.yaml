@@ -2,7 +2,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: core-vol1
-  name: open5gs-mongodb
   labels:
     app.kubernetes.io/name: open5gs-mongodb
     app.kubernetes.io/instance: open5gs-mongodb
@@ -27,8 +26,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: core-vol2
-  labels:
-    name: open5gs-mongodb
   labels:
     app.kubernetes.io/name: open5gs-mongodb
     app.kubernetes.io/instance: open5gs-mongodb
