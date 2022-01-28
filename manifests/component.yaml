@@ -31,12 +31,21 @@ spec:
     spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: feature.node.kubernetes.io/open5gs
+                operator: In
+                values:
+                  - "true"
       containers:
-      - name: main 
+      - name: main
         image: $IMAGE
         imagePullPolicy: Always
-        volumeMounts: 
-          - name: ${COMPONENT}-cfg 
+        volumeMounts:
+          - name: ${COMPONENT}-cfg
             mountPath: /etc/open5gs/${COMPONENT}.yaml
             subPath: ${COMPONENT}.yaml
           - name: ${COMPONENT}-cfg
@@ -58,6 +67,6 @@ spec:
         configMap:
           name: $COMPONENT
       - name: tls
-        secret: 
+        secret:
           secretName: $COMPONENT
           optional: true
