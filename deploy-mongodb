@@ -18,7 +18,7 @@ if ! oc get namespace "$OPEN5GS_MONGO_NS"
 then
   oc create namespace "$OPEN5GS_MONGO_NS"
 fi
-
+oc project "$OPEN5GS_MONGO_NS"
 oc apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
 oc apply --kustomize="$BASE/config/rbac/"
 oc apply --filename="$HERE/manifests/operator_openshift.yaml"
@@ -42,7 +42,7 @@ oc apply -f "$HERE/manifests/5gs-vol.yaml"
 VERSION=$OPEN5GS_VERSION \
 MONGODB_VERSION=$MONGODB_VERSION \
 MONGO_NS=$OPEN5GS_MONGO_NS \
-envsubst < "$HERE/manifests/mongodb-replicaset.yaml" |
+envsubst < "$HERE/manifests/mongodb-cr.yaml" |
 oc apply -f -
 
 PHASE=
