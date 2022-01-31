@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+HERE=$( cd "$(dirname "$0")" ; pwd -P )
+. "$HERE/_env"
+. "$HERE/_functions"
+
+VERSION=2.3.2
+
+oc delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+oc delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+oc delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+oc wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
