@@ -19,7 +19,7 @@ spec:
   nfs:
     path: /
     server: 10.40.0.101
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Recycle
   storageClassName: nfs-altreg
   volumeMode: Filesystem
 ---
