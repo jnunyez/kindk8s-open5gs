@@ -145,33 +145,8 @@ data:
     \   gtpc:\n      name: sgwc\n\nsmf:\n    gtpc:\n      name: smf\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-07-05T14:24:02Z"
+  namespace: $NS
   labels:
     app.kubernetes.io/part-of: open5gs
     name: mme
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:mme.conf: {}
-        f:mme.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
   name: mme
-  namespace: default
-  resourceVersion: "746299"
-  uid: c5dc8800-526d-4f9a-b319-67ea0a6814d8

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nrf
+  namespace: $NS
   labels:
     app.kubernetes.io/part-of: open5gs
 data:

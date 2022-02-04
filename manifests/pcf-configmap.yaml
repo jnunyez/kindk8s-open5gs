@@ -23,28 +23,5 @@ metadata:
   labels:
     app.kubernetes.io/part-of: open5gs
     name: pcf
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:pcf.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T15:48:00Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T15:48:00Z"
   name: pcf
-  namespace: default
-  resourceVersion: "765588"
-  uid: 9d816106-515b-4ade-9411-7fdddf4d6b80
+  namespace: $NS

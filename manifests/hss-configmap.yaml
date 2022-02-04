@@ -148,7 +148,7 @@ data:
       freeDiameter: /etc/freeDiameter/hss.conf
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-07-05T14:24:02Z"
+  namespace: $NS
   labels:
     app.kubernetes.io/part-of: open5gs
     name: hss
@@ -175,6 +175,5 @@ metadata:
     operation: Update
     time: "2021-07-05T14:24:02Z"
   name: hss
-  namespace: default
   resourceVersion: "746292"
   uid: defbf7bc-4950-411d-b727-1cdb85ec9abc

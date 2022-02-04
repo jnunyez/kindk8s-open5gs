@@ -156,28 +156,5 @@ metadata:
     app.kubernetes.io/part-of: open5gs
     name: pcrf
   managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:pcrf.conf: {}
-        f:pcrf.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
   name: pcrf
-  namespace: default
-  resourceVersion: "746297"
-  uid: 3d3f1001-96d6-4679-b363-cc2f6a6a0d3c
+  namespace: $NS

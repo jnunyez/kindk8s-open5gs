@@ -7,11 +7,16 @@ HERE=$( cd "$(dirname "$0")" ; pwd -P )
 
 VERSION=2.3.2
 
-oc delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
-oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+if ! oc get namespace "$OPEN5GS_CORE_NS"
+then
+  oc create namespace "$OPEN5GS_CORE_NS"
+fi
+
+oc delete configmap --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
+oc delete deployments --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
+oc delete services --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
+oc wait pods --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --for=delete || true
+oc wait services --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --for=delete || true
 
 VERSION=$VERSION \
 envsubst < "$HERE/manifests/services.yaml" |
@@ -21,6 +26,7 @@ function d() {
     VERSION=$VERSION \
     COMPONENT=$1 \
     IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
+    NS=$2 \
     envsubst < "$HERE/manifests/component.yaml" |
     oc apply -f -
 }
@@ -30,6 +36,7 @@ function du() {
     VERSION=$VERSION \
     COMPONENT=$1 \
     IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
+    NS=$2 \
     envsubst < "$HERE/manifests/$1-component.yaml" |
     oc apply -f -
 }
@@ -40,6 +47,7 @@ function c() {
 	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 	#echo "MONGODB URI is: "$MONGODB_URI
 	MONGODB_URI=$MONGODB_URI \
+	NS=$2 \
 	envsubst < "$HERE/manifests/$1-configmap.yaml" |
 	oc create -f -
 }
@@ -48,6 +56,7 @@ function dw() {
 	VERSION=2.3.1 \
 	WEBUIPORT=3000 \
 	COMPONENT=$1 \
+	NS=$2 \
 	IMAGE="quay.io/jnunez/webui:${VERSION}" \
 	envsubst < "$HERE/manifests/component-webui.yaml" |
     oc apply -f -
@@ -59,53 +68,55 @@ function cw() {
 	IFS=', ' read -r -a MONGODB_URI <<< "$MONGODB_URIS"
 	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 	MONGODB_URI=$MONGODB_URI \
+	NS=$2 \
 	envsubst < "$HERE/manifests/$1-configmap.yaml" |
 	oc apply -f -
 }
 
 
-oc create -f "$HERE/manifests/amf-configmap.yaml"
-oc create -f "$HERE/manifests/nrf-configmap.yaml"
-oc create -f "$HERE/manifests/ausf-configmap.yaml"
-oc create -f "$HERE/manifests/udm-configmap.yaml"
-oc create -f "$HERE/manifests/nssf-configmap.yaml"
+oc create -f "$HERE/manifests/amf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/nrf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/ausf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/udm-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/nssf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
 
 
-oc create -f "$HERE/manifests/upf-configmap.yaml"
-oc create -f "$HERE/manifests/wraprouting-configmap.yaml"
+oc create -f "$HERE/manifests/upf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/wraprouting-configmap.yaml" -n "$OPEN5GS_CORE_NS"
 
-oc create -f "$HERE/manifests/sgwc-configmap.yaml"
-oc create -f "$HERE/manifests/sgwu-configmap.yaml"
+oc create -f "$HERE/manifests/sgwc-configmap.yaml" -n "$OPEN5GS_CORE_NS"
+oc create -f "$HERE/manifests/sgwu-configmap.yaml" -n "$OPEN5GS_CORE_NS"
 
-c udr
-c bsf
-c hss
-c mme
-c pcrf
-c pcf
+c udr $OPEN5GS_CORE_NS
+c bsf $OPEN5GS_CORE_NS
+c hss $OPEN5GS_CORE_NS
+c mme $OPEN5GS_CORE_NS
+c pcrf $OPEN5GS_CORE_NS
+c pcf $OPEN5GS_CORE_NS
 
 
-d sgwu
-d sgwc
-du upf
-d nrf
-d amf
-d ausf
-d udm
-d udr
-d bsf
-d hss
-d mme
-d nssf
-d pcf
-d pcrf
+d sgwu $OPEN5GS_CORE_NS
+d sgwc $OPEN5GS_CORE_NS
+du upf $OPEN5GS_CORE_NS
+d nrf $OPEN5GS_CORE_NS
+d amf $OPEN5GS_CORE_NS
+d ausf $OPEN5GS_CORE_NS
+d udm $OPEN5GS_CORE_NS
+d udr $OPEN5GS_CORE_NS
+d bsf $OPEN5GS_CORE_NS
+d hss $OPEN5GS_CORE_NS
+d mme $OPEN5GS_CORE_NS
+d nssf $OPEN5GS_CORE_NS
+d pcf $OPEN5GS_CORE_NS
+d pcrf $OPEN5GS_CORE_NS
 
 #wait for UPF to get allocated IP
 oc wait pods --selector=app.kubernetes.io/name=upf --for=condition=Ready
 UPFIP=$(oc get pods -l app.kubernetes.io/name=upf -o jsonpath="{.items[*].status.podIP}") \
+NS=$OPEN5GS_CORE_NS \
 envsubst < "$HERE/manifests/smf-configmap.yaml" |
 oc create -f -
-d smf
+d smf $OPEN5GS_CORE_NS
 
-cw webui
-dw webui
+cw webui $OPEN5GS_CORE_NS
+dw webui $OPEN5GS_CORE_NS

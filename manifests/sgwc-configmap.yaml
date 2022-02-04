@@ -17,28 +17,5 @@ metadata:
   labels:
     app.kubernetes.io/part-of: open5gs
     name: sgwc
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:sgwc.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T15:34:27Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T15:34:58Z"
   name: sgwc
-  namespace: default
-  resourceVersion: "762619"
-  uid: ee3e3c0a-500f-4f4d-a76c-6732f27287e5
+  namespace: $NS

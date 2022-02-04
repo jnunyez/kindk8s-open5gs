@@ -3,9 +3,9 @@
 ---
 apiVersion: v1
 kind: Service
-
 metadata:
   name: mme
+  namespace: $NS
   labels:
     app.kubernetes.io/name: mme
     app.kubernetes.io/instance: mme
@@ -41,6 +41,7 @@ kind: Service
 
 metadata:
   name: sgwc
+  namespace: $NS
   labels:
     app.kubernetes.io/name: sgwc
     app.kubernetes.io/instance: sgwc
@@ -73,6 +74,7 @@ kind: Service
 
 metadata:
   name: smf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: smf
     app.kubernetes.io/instance: smf
@@ -117,6 +119,7 @@ kind: Service
 
 metadata:
   name: amf-svc
+  namespace: $NS
   labels:
     app.kubernetes.io/name: amf-svc
     app.kubernetes.io/instance: amf-svc
@@ -151,6 +154,7 @@ kind: Service
 
 metadata:
   name: sgwu
+  namespace: $NS
   labels:
     app.kubernetes.io/name: sgwu
     app.kubernetes.io/instance: sgwu
@@ -183,6 +187,7 @@ kind: Service
 
 metadata:
   name: upf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: upf
     app.kubernetes.io/instance: upf
@@ -215,6 +220,7 @@ kind: Service
 
 metadata:
   name: hss
+  namespace: $NS
   labels:
     app.kubernetes.io/name: hss
     app.kubernetes.io/instance: hss
@@ -243,6 +249,7 @@ kind: Service
 
 metadata:
   name: pcrf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: pcrf
     app.kubernetes.io/instance: pcrf
@@ -270,6 +277,7 @@ kind: Service
 
 metadata:
   name: nrf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: nrf
     app.kubernetes.io/instance: nrf
@@ -298,6 +306,7 @@ kind: Service
 
 metadata:
   name: ausf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: ausf
     app.kubernetes.io/instance: ausf
@@ -325,6 +334,7 @@ kind: Service
 
 metadata:
   name: udm
+  namespace: $NS
   labels:
     app.kubernetes.io/name: udm
     app.kubernetes.io/instance: udm
@@ -352,6 +362,7 @@ kind: Service
 
 metadata:
   name: pcf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: pcf
     app.kubernetes.io/instance: pcf
@@ -379,6 +390,7 @@ kind: Service
 
 metadata:
   name: nssf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: nssf
     app.kubernetes.io/instance: nssf
@@ -406,6 +418,7 @@ kind: Service
 
 metadata:
   name: bsf
+  namespace: $NS
   labels:
     app.kubernetes.io/name: bsf
     app.kubernetes.io/instance: bsf
@@ -433,6 +446,7 @@ kind: Service
 
 metadata:
   name: udr
+  namespace: $NS
   labels:
     app.kubernetes.io/name: udr
     app.kubernetes.io/instance: udr
@@ -459,6 +473,7 @@ kind: Service
 
 metadata:
   name: webui-svc
+  namespace: $NS
   labels:
     app.kubernetes.io/name: webui-svc
     app.kubernetes.io/instance: webui-svc

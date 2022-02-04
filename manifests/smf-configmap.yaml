@@ -170,33 +170,9 @@ data:
           - addr: $UPFIP
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-07-05T15:07:07Z"
   labels:
     app.kubernetes.io/part-of: open5gs
     name: smf
-  managedFields:
-  - apiVersion: v1
     fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:smf.conf: {}
-        f:smf.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T15:07:07Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T15:07:18Z"
   name: smf
-  namespace: default
-  resourceVersion: "755587"
-  uid: 857bf1df-fd10-4f99-a59d-b1510ecb8ec1
+  namespace: $NS
