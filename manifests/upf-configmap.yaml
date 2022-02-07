@@ -19,32 +19,8 @@ data:
             dnn: internet
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-07-05T15:17:19Z"
   labels:
     app.kubernetes.io/part-of: open5gs
     name: upf
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:upf.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T15:17:19Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T15:17:59Z"
   name: upf
-  namespace: default
-  resourceVersion: "758484"
-  uid: a9b7318b-9eb7-462d-80fb-7192c18cf396
+  namespace: $NS

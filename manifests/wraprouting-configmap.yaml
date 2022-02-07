@@ -13,17 +13,5 @@ metadata:
     app.kubernetes.io/component: 5g
     app.kubernetes.io/part-of: open5gs
     app.kubernetes.io/managed-by: open5gs
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:wraprouting: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-15T15:42:55Z"
   name: wraprouting
-  namespace: default
-  resourceVersion: "873544"
-  uid: dbfc9f0c-1f83-4d3c-8da6-91b5b122b21c
+  namespace: $NS
