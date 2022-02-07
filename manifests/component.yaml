@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: $COMPONENT
+  namespace: $NS
   labels:
     app.kubernetes.io/name: $COMPONENT
     app.kubernetes.io/instance: $COMPONENT
@@ -40,6 +41,8 @@ spec:
                 operator: In
                 values:
                   - "true"
+      serviceAccountName: open5gs
+      serviceAccount: open5gs
       containers:
       - name: main
         image: $IMAGE

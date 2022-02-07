@@ -12,3 +12,7 @@ oc delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-
 oc delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
 oc wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
 oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+
+oc adm policy remove-scc-from-user privileged -z open5gs
+oc delete sa open5gs --ignore-not-found=true
+oc delete ns "$OPEN5GS_CORE_NS" --ignore-not-found=true

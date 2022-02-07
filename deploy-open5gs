@@ -10,6 +10,9 @@ VERSION=2.3.2
 if ! oc get namespace "$OPEN5GS_CORE_NS"
 then
   oc create namespace "$OPEN5GS_CORE_NS"
+  oc project "$OPEN5GS_CORE_NS"
+  oc create sa open5gs
+  oc adm policy add-scc-to-user privileged -z open5gs
 fi
 
 oc delete configmap --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
@@ -73,8 +76,7 @@ function cw() {
 	oc apply -f -
 }
 
-#Deploy Config Maps
-echo "deploying configmaps"
+#Provision Config Maps
 c amf $OPEN5GS_CORE_NS
 c nrf $OPEN5GS_CORE_NS
 c ausf $OPEN5GS_CORE_NS
@@ -84,21 +86,6 @@ c upf $OPEN5GS_CORE_NS
 c wraprouting $OPEN5GS_CORE_NS
 c sgwc $OPEN5GS_CORE_NS
 c sgwu $OPEN5GS_CORE_NS
-
-#oc create -f "$HERE/manifests/amf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/nrf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/ausf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/udm-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/nssf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-
-#oc create -f "$HERE/manifests/upf-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/wraprouting-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-
-#oc create -f "$HERE/manifests/sgwc-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-#oc create -f "$HERE/manifests/sgwu-configmap.yaml" -n "$OPEN5GS_CORE_NS"
-
-
-
 c udr $OPEN5GS_CORE_NS
 c bsf $OPEN5GS_CORE_NS
 c hss $OPEN5GS_CORE_NS
@@ -106,7 +93,7 @@ c mme $OPEN5GS_CORE_NS
 c pcrf $OPEN5GS_CORE_NS
 c pcf $OPEN5GS_CORE_NS
 
-
+#Provision Deployment objects
 d sgwu $OPEN5GS_CORE_NS
 d sgwc $OPEN5GS_CORE_NS
 du upf $OPEN5GS_CORE_NS
