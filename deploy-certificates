@@ -5,35 +5,39 @@ HERE=$( cd "$(dirname "$0")" ; pwd -P )
 . "$HERE/_env"
 
 
-m 'deploying cert-manager operator...'
+if ! oc get namespace "$OPEN5GS_CORE_NS"
+then
+  oc create namespace "$OPEN5GS_CORE_NS"
+  oc project "$OPEN5GS_CORE_NS"
+fi
+
+#m 'deploying cert-manager operator...'
 kubectl apply --filename="https://github.com/jetstack/cert-manager/releases/download/v$CERT_MANAGER_VERSION/cert-manager.yaml"
 POD=$(oc get pods --namespace=cert-manager --selector=app=webhook --output=jsonpath="{.items[0].metadata.name}")
 oc wait "pods/$POD" --namespace=cert-manager --for=condition=ContainersReady
 
 if [ "$1" == -c ]; then
-    m 'cleaning up...'
+    #m 'cleaning up...'
     oc delete issuers --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
     oc delete certificates --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
     oc wait issuers --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
     oc wait certificates --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
     # Cert-Manager will never automatically delete secrets!
-    oc delete secrets hss -n $OPEN5GS_CERT_NS --ignore-not-found=true
-    oc delete secrets mme -n $OPEN5GS_CERT_NS --ignore-not-found=true
-    oc delete secrets pcrf -n $OPEN5GS_CERT_NS --ignore-not-found=true
-    oc delete secrets smf -n $OPEN5GS_CERT_NS --ignore-not-found=true
-    oc delete ns $OPEN5GS_CERT_NS
+    oc delete secrets hss -n $OPEN5GS_CORE_NS --ignore-not-found=true
+    oc delete secrets mme -n $OPEN5GS_CORE_NS --ignore-not-found=true
+    oc delete secrets pcrf -n $OPEN5GS_CORE_NS --ignore-not-found=true
+    oc delete secrets smf -n $OPEN5GS_CORE_NS --ignore-not-found=true
+    oc delete ns $OPEN5GS_CORE_NS
 fi
 
-m 'deploying issuer...'
-
-oc create ns $OPEN5GS_CERT_NS
+#m 'deploying issuer...'
 
 VERSION=$OPEN5GS_VERSION \
-CERT_NS=$OPEN5GS_CERT_NS \
+CERT_NS=$OPEN5GS_CORE_NS \
 envsubst < "$HERE/manifests/issuer.yaml" |
 oc apply -f -
 
-m 'deploying certificates...'
+#m 'deploying certificates...'
 
 function d() {
     VERSION=$OPEN5GS_VERSION \
