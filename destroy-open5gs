@@ -7,12 +7,12 @@ HERE=$( cd "$(dirname "$0")" ; pwd -P )
 
 VERSION=2.3.2
 
-oc delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
-oc wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
-oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete || true
+oc delete configmap --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true -n "$OPEN5GS_CORE_NS"
+oc delete deployments --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true -n "$OPEN5GS_CORE_NS"
+oc delete services --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true -n "$OPEN5GS_CORE_NS"
+oc wait pods --selector=app.kubernetes.io/part-of=open5gs --for=delete -n "$OPEN5GS_CORE_NS" || true
+oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete -n "$OPEN5GS_CORE_NS" || true
 
-oc adm policy remove-scc-from-user privileged -z open5gs
-oc delete sa open5gs --ignore-not-found=true
+oc adm policy remove-scc-from-user privileged -z open5gs -n "$OPEN5GS_CORE_NS" || true
+oc delete sa open5gs --ignore-not-found=true -n "$OPEN5GS_CORE_NS" || true
 oc delete ns "$OPEN5GS_CORE_NS" --ignore-not-found=true

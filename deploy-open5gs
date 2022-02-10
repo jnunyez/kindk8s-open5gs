@@ -11,13 +11,14 @@ if ! oc get namespace "$OPEN5GS_CORE_NS"
 then
   oc create namespace "$OPEN5GS_CORE_NS"
   oc project "$OPEN5GS_CORE_NS"
-  oc create sa open5gs
-  oc adm policy add-scc-to-user privileged -z open5gs
 fi
+
+oc create sa open5gs -n $OPEN5GS_CORE_NS
+oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
 
 oc delete configmap --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
 oc delete deployments --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
-oc delete services --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
+oc delete services --selector=app.kubernetes.io/component=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
 oc wait pods --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --for=delete || true
 oc wait services --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --for=delete || true
 
@@ -61,7 +62,7 @@ function dw() {
 	COMPONENT=$1 \
 	NS=$2 \
 	IMAGE="quay.io/jnunez/webui:${VERSION}" \
-	envsubst < "$HERE/manifests/component-webui.yaml" |
+	envsubst < "$HERE/manifests/webui-component.yaml" |
     oc apply -f -
 }
 

@@ -50,3 +50,7 @@ d hss
 d mme
 d pcrf
 d smf
+
+#deploy service account
+oc create sa open5gs -n $OPEN5GS_CORE_NS
+oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"

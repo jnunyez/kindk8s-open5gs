@@ -31,6 +31,15 @@ spec:
     spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: feature.node.kubernetes.io/open5gs
+                operator: In
+                values:
+                  - "true"
       serviceAccountName: open5gs
       serviceAccount: open5gs
       containers:
