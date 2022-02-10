@@ -1,33 +1,27 @@
-# kindk8s-open5gs
+# ocp-open5gs
 
-Manifests and data examples to deploy open5gs in k8s.
+Manifests and data examples to deploy open5gs in Red Hat OpenShift.
 
 ## Rationale
 
-This repo contains an example deployment of [open5gs](https://open5gs.org) in k8s using [kind](https://kind.sigs.k8s.io). More info of this opensource 5GC can be found at [open5gs](https://open5gs.org)
+This repo contains an example deployment of [open5gs](https://open5gs.org) in Red Hat OpenShift container platform. More info of this opensource 5GC can be found at [open5gs](https://open5gs.org)
 
 ## Quickstart
 
 
-1. Deploy kind k8s cluster composed by one controller and three workers using docker containers:
-
-   ```console
-   deploy-cluster
-   ```
-
-2. Deploy mongodb community operator. A mongodb cluster with three replicas that will act as backend for the open5gs core network.
+1. Deploy mongodb community operator. A mongodb cluster with three replicas that will act as backend for the open5gs core network.
 
    ```console
    deploy-mongodb
    ```
 
-3. Deploy certificates for open5gs components requiring diameter authentication. The HSS, MME, PCRF and the SMF are the entities requiring a certifacate that use diameter AAA protocol. The command below deploys cert-manager operator to ultimately generate the required secrets for the HSS, MME, PCRF, and SMF.
+2. Deploy certificates for open5gs components requiring diameter authentication. The HSS, MME, PCRF and the SMF are the entities requiring a certifacate that use diameter AAA protocol. The command below deploys cert-manager operator to ultimately generate the required secrets for the HSS, MME, PCRF, and SMF. A service account necessary to associate to all the subsequent deployments is also created.
 
    ```console
    deploy-certificates
    ``` 
 
-4. Deploy open5gs components.
+3. Deploy open5gs components.
 
    ```console
    deploy-open5gs
@@ -39,7 +33,7 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in k8
 
 ### Certificates and Diameter
 
-As some of the services composing open5gs require diameter protocol authentication, the deployment needs to self-generate some certificates. In particular HSS, MME, PCRF, and SMF are using certificates. The certificates are gathered as secrets from the k8s and mounted during deployment in `/etc/tls`. These certificates are deployed k8s using the cert manager. To check that the certificates are present run `kubectl get certificate` and expect a very similar output as the one below:
+As some of the services composing open5gs require diameter protocol authentication, the deployment needs to self-generate some certificates. In particular HSS, MME, PCRF, and SMF are using certificates. The certificates are gathered as secrets and mounted during deployment in `/etc/tls`. These certificates are deployed using the cert manager. To check that the certificates are present run `kubectl get certificate` and expect a very similar output as the one below:
 
 ```console
 NAME   READY   SECRET   AGE
@@ -49,10 +43,10 @@ pcrf   True    pcrf     30m
 smf    True    smf      30m
 ```
 
-### MongoDB K8s operator
+### MongoDB operator
 
 The HSS and UDM are using as backend mongodb to store subscriber information. We use [mongoDB-operator](https://github.com/mongodb/mongodb-kubernetes-operator) to deploy three replicas sets of mongodb (since we are deploying three workers).
-Before deploying open5gs components to check that the mongodb operator has been deployed run`kubectl get mongodbcommunity` and expect a very similar ouput as the one below: 
+Before deploying open5gs components to check that the mongodb operator has been deployed run `oc get mongodbcommunity` and expect a very similar ouput as the one below: 
 
 ```console
 NAME              PHASE     VERSION
@@ -61,7 +55,7 @@ open5gs-mongodb   Running
 
 ### Open5Gs components
 
-We use the same base image for all open5gs components. At deployment time we inject different `.yaml`configuration files to each open5gs microservice  by means of configmap. Also we use a config map to mount diameter configuration for the hss, smf, mme, and pcrf. After running the deployment of open5gs we recomment to check that all pods are running eventually. Expect a very similar output as the one below after running `kubectl get pods`:
+We use the same base image for all open5gs components. At deployment time we inject different `.yaml`configuration files to each open5gs microservice  by means of configmap. Also we use a config map to mount diameter configuration for the hss, smf, mme, and pcrf. After running the deployment of open5gs we recomment to check that all pods are running eventually. Expect a very similar output as the one below after running `oc get pods`:
 
 ```console
 NAME                                          READY   STATUS    RESTARTS   AGE
