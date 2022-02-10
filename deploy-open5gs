@@ -67,7 +67,7 @@ function dw() {
 
 function cw() {
 
-	MONGODB_URIS=$(oc get mongodbcommunity open5gs-mongodb --output=jsonpath={.status.mongoUri})
+	MONGODB_URIS=$(oc get mongodbcommunity open5gs-mongodb -n $OPEN5GS_MONGO_NS --output=jsonpath={.status.mongoUri})
 	IFS=', ' read -r -a MONGODB_URI <<< "$MONGODB_URIS"
 	MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 	MONGODB_URI=$MONGODB_URI \

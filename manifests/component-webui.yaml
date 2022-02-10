@@ -31,6 +31,8 @@ spec:
     spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
+      serviceAccountName: open5gs
+      serviceAccount: open5gs
       containers:
       - name: ${COMPONENT}
         ports:
