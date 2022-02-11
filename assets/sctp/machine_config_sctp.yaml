@@ -1,0 +1,23 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    #all workers need to enable SCTP
+    machineconfiguration.openshift.io/role: worker
+  name: load-sctp-module
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+        - contents:
+            source: data:,
+          mode: 0644
+          overwrite: true
+          path: /etc/modprobe.d/sctp-blacklist.conf
+        - contents:
+            source: data:,sctp
+          mode: 0644
+          overwrite: true
+          path: /etc/modules-load.d/sctp-load.conf
