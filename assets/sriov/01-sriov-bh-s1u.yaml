@@ -1,0 +1,18 @@
+---
+###############################################################################
+# SR-IOV Network Definition for the NS of the workload
+#  s1c-bh + vlan 2014 + vran_netdevice
+###############################################################################
+# NS = workload-s1-backhaul
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: s1u-bh
+  namespace: openshift-sriov-network-operator
+spec:
+  resourceName: vran_netdevice
+  networkNamespace: open5gs-core
+  vlan: 2014
+  ipam: |-
+    {"type": "static"}
+  linkState: auto
