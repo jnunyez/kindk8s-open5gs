@@ -12,7 +12,7 @@ metadata:
 spec:
   resourceName: vran_netdevice
   networkNamespace: open5gs-core
-  vlan: 
+  vlan: 2013 
   ipam: |-
     {"type": "static"}
   linkState: auto
