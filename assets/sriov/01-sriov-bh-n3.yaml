@@ -10,7 +10,7 @@ metadata:
   name: n3-bh
   namespace: openshift-sriov-network-operator
 spec:
-  resourceName: vran_netdevice
+  resourceName: core_netdevice
   networkNamespace: open5gs-core
   vlan: 2016
   ipam: |-

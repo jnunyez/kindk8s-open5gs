@@ -4,10 +4,10 @@
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetworkNodePolicy
 metadata:
-  name: core-networks
+  name: core-network-devices
   namespace: openshift-sriov-network-operator
 spec:
-  resourceName: vran_netdevice
+  resourceName: core_netdevice
   nodeSelector:
     feature.node.kubernetes.io/open5gs: "true"
   deviceType: netdevice
@@ -18,4 +18,4 @@ spec:
     vendor: "8086"
     deviceID: "159b"
     pfNames:
-      - ens4f0#0-6
+      - ens4f1#0-6
