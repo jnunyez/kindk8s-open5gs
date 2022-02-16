@@ -12,7 +12,7 @@ metadata:
 spec:
   resourceName: core_netdevice
   networkNamespace: open5gs-core
-  vlan: 2020
+  vlan: 901
   ipam: |-
     {"type": "static"}
   linkState: auto

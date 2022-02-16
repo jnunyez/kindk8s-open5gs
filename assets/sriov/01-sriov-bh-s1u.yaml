@@ -10,9 +10,9 @@ metadata:
   name: s1u-bh
   namespace: openshift-sriov-network-operator
 spec:
-  resourceName: core_netdevice
+  resourceName: core_sriov_netdevice
   networkNamespace: open5gs-core
-  vlan: 2014
+  vlan: 804
   ipam: |-
     {"type": "static"}
   linkState: auto

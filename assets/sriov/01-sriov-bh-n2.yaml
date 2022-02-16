@@ -1,7 +1,7 @@
 ---
 ###############################################################################
 # SR-IOV Network Definition for the NS of the workload
-#  N2-bh + vlan 2015 + vran_netdevice
+#  N2-bh + vlan 903 + core_sriov_netdevice
 ###############################################################################
 # NS =
 apiVersion: sriovnetwork.openshift.io/v1
@@ -12,7 +12,7 @@ metadata:
 spec:
   resourceName: core_netdevice
   networkNamespace: open5gs-core
-  vlan: 2015
+  vlan: 903
   ipam: |-
     {"type": "static"}
   linkState: auto
