@@ -3,16 +3,23 @@
 # SR-IOV Network Definition for the NS of the workload
 #  N2-bh + vlan 903 + core_sriov_netdevice
 ###############################################################################
-# NS =
+# NS = open5gs-core
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetwork
 metadata:
   name: n2-bh
   namespace: openshift-sriov-network-operator
 spec:
-  resourceName: core_netdevice
+  resourceName: core_sriov_netdevice
   networkNamespace: open5gs-core
   vlan: 903
   ipam: |-
-    {"type": "static"}
+    {
+      "type": "static",
+      "addresses": [
+        {
+          "address": "10.28.3.2/24"  
+        }
+      ]
+    }
   linkState: auto

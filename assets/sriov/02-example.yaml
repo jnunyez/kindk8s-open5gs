@@ -5,7 +5,7 @@ metadata:
   labels:
     env: test
   annotations:
-    k8s.v1.cni.cncf.io/networks: n2-bh
+    k8s.v1.cni.cncf.io/networks: n3-bh, n2-bh, n6-wan, s1c-bh, s1u-bh
 spec:
   affinity:
     nodeAffinity:
@@ -24,7 +24,7 @@ spec:
     args: [ "while true; do sleep 300000; done;" ]
     resources:
       requests:
-        openshift.io/core_netdevice: '1'
+        openshift.io/core_sriov_netdevice: '5'
       limits:
-        openshift.io/core_netdevice: '1'
+        openshift.io/core_sriov_netdevice: '5'
   restartPolicy: "Never"
