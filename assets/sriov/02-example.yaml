@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod1
+  labels:
+    env: test
+  annotations:
+    k8s.v1.cni.cncf.io/networks: n2-bh
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: feature.node.kubernetes.io/open5gs
+            operator: In
+            values:
+            - "true"
+  containers:
+  - name: appcntr1
+    image: centos/tools
+    imagePullPolicy: IfNotPresent
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300000; done;" ]
+    resources:
+      requests:
+        openshift.io/core_netdevice: '1'
+      limits:
+        openshift.io/core_netdevice: '1'
+  restartPolicy: "Never"
