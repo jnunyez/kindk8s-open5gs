@@ -7,11 +7,11 @@ HERE=$( cd "$(dirname "$0")" ; pwd -P )
 
 VERSION=2.3.2
 
-if ! oc get namespace "$OPEN5GS_CORE_NS"
-then
-  oc create namespace "$OPEN5GS_CORE_NS"
+#if ! oc get namespace "$OPEN5GS_CORE_NS"
+#then
+#  oc create namespace "$OPEN5GS_CORE_NS"
   oc project "$OPEN5GS_CORE_NS"
-fi
+#fi
 
 oc create sa open5gs -n $OPEN5GS_CORE_NS
 oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
@@ -31,6 +31,8 @@ function d() {
     COMPONENT=$1 \
     IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
     NS=$2 \
+    NET=$3 \
+    NICS=$4 \
     envsubst < "$HERE/manifests/component.yaml" |
     oc apply -f -
 }
@@ -41,6 +43,8 @@ function du() {
     COMPONENT=$1 \
     IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
     NS=$2 \
+    NET=$3 \
+    NICS=$4 \
     envsubst < "$HERE/manifests/$1-component.yaml" |
     oc apply -f -
 }
@@ -78,37 +82,37 @@ function cw() {
 }
 
 #Provision Config Maps
-c amf $OPEN5GS_CORE_NS
-c nrf $OPEN5GS_CORE_NS
+c amf $OPEN5GS_CORE_NS 
+c nrf $OPEN5GS_CORE_NS 
 c ausf $OPEN5GS_CORE_NS
-c udm $OPEN5GS_CORE_NS
-c nssf $OPEN5GS_CORE_NS
+c udm $OPEN5GS_CORE_NS 
+c nssf $OPEN5GS_CORE_NS 
 c upf $OPEN5GS_CORE_NS
 c wraprouting $OPEN5GS_CORE_NS
-c sgwc $OPEN5GS_CORE_NS
-c sgwu $OPEN5GS_CORE_NS
-c udr $OPEN5GS_CORE_NS
-c bsf $OPEN5GS_CORE_NS
-c hss $OPEN5GS_CORE_NS
-c mme $OPEN5GS_CORE_NS
-c pcrf $OPEN5GS_CORE_NS
-c pcf $OPEN5GS_CORE_NS
+c sgwc $OPEN5GS_CORE_NS 
+c sgwu $OPEN5GS_CORE_NS 
+c udr $OPEN5GS_CORE_NS 
+c bsf $OPEN5GS_CORE_NS 
+c hss $OPEN5GS_CORE_NS 
+c mme $OPEN5GS_CORE_NS 
+c pcrf $OPEN5GS_CORE_NS 
+c pcf $OPEN5GS_CORE_NS 
 
 #Provision Deployment objects
-d sgwu $OPEN5GS_CORE_NS
-d sgwc $OPEN5GS_CORE_NS
-du upf $OPEN5GS_CORE_NS
-d nrf $OPEN5GS_CORE_NS
-d amf $OPEN5GS_CORE_NS
-d ausf $OPEN5GS_CORE_NS
-d udm $OPEN5GS_CORE_NS
-d udr $OPEN5GS_CORE_NS
-d bsf $OPEN5GS_CORE_NS
-d hss $OPEN5GS_CORE_NS
-d mme $OPEN5GS_CORE_NS
-d nssf $OPEN5GS_CORE_NS
-d pcf $OPEN5GS_CORE_NS
-d pcrf $OPEN5GS_CORE_NS
+d sgwu $OPEN5GS_CORE_NS " " "0"
+d sgwc $OPEN5GS_CORE_NS " " "0"
+du upf $OPEN5GS_CORE_NS "n3-bh" "1"
+d nrf $OPEN5GS_CORE_NS " " "0"
+d amf $OPEN5GS_CORE_NS "n2-bh" "1"
+d ausf $OPEN5GS_CORE_NS " " "0"
+d udm $OPEN5GS_CORE_NS " " "0"
+d udr $OPEN5GS_CORE_NS " " "0"
+d bsf $OPEN5GS_CORE_NS " " "0"
+d hss $OPEN5GS_CORE_NS " " "0"
+d mme $OPEN5GS_CORE_NS " " "0"
+d nssf $OPEN5GS_CORE_NS " " "0"
+d pcf $OPEN5GS_CORE_NS " " "0"
+d pcrf $OPEN5GS_CORE_NS " " "0"
 
 #wait for UPF to get allocated IP
 oc wait pods --selector=app.kubernetes.io/name=upf --for=condition=Ready

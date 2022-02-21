@@ -15,4 +15,4 @@ oc wait services --selector=app.kubernetes.io/part-of=open5gs --for=delete -n "$
 
 oc adm policy remove-scc-from-user privileged -z open5gs -n "$OPEN5GS_CORE_NS" || true
 oc delete sa open5gs --ignore-not-found=true -n "$OPEN5GS_CORE_NS" || true
-oc delete ns "$OPEN5GS_CORE_NS" --ignore-not-found=true
+#oc delete ns "$OPEN5GS_CORE_NS" --ignore-not-found=true
