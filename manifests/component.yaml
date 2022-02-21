@@ -11,7 +11,6 @@ metadata:
     app.kubernetes.io/component: 5g
     app.kubernetes.io/part-of: open5gs
     app.kubernetes.io/managed-by: open5gs
-
 spec:
   replicas: 1
   selector:
@@ -20,8 +19,12 @@ spec:
       app.kubernetes.io/instance: $COMPONENT
       app.kubernetes.io/version: $VERSION
       app.kubernetes.io/component: 5g
+      app.kubernetes.io/part-of: open5gs
+      app.kubernetes.io/managed-by: open5gs
   template:
     metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: $NET
       labels:
         app.kubernetes.io/name: $COMPONENT
         app.kubernetes.io/instance: $COMPONENT
@@ -47,6 +50,11 @@ spec:
       - name: main
         image: $IMAGE
         imagePullPolicy: Always
+        resources:
+          requests:
+            openshift.io/core_sriov_netdevice: $NICS
+          limits:
+            openshift.io/core_sriov_netdevice: $NICS
         volumeMounts:
           - name: ${COMPONENT}-cfg
             mountPath: /etc/open5gs/${COMPONENT}.yaml

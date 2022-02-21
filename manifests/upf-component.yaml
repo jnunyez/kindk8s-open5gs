@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
+  annotations:
+    k8s.v1.cni.cnf.io/networks: $NET
   name: $COMPONENT
   labels:
     app.kubernetes.io/name: $COMPONENT
@@ -10,7 +12,6 @@ metadata:
     app.kubernetes.io/component: 5g
     app.kubernetes.io/part-of: open5gs
     app.kubernetes.io/managed-by: open5gs
-
 spec:
   replicas: 1
   selector:
@@ -28,6 +29,8 @@ spec:
         app.kubernetes.io/component: 5g
         app.kubernetes.io/part-of: open5gs
         app.kubernetes.io/managed-by: open5gs
+      annotations:
+        k8s.v1.cni.cncf.io/networks: n3bh
     spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
@@ -43,12 +46,17 @@ spec:
       serviceAccountName: open5gs
       serviceAccount: open5gs
       containers:
-      - name: main 
+      - name: main
         image: $IMAGE
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            openshift.io/core_sriov_netdevice: '1'
+          limits:
+            openshift.io/core_sriov_netdevice: '1'
         command: ["/scripts/wraprouting"]
-        volumeMounts: 
-          - name: ${COMPONENT}-cfg 
+        volumeMounts:
+          - name: ${COMPONENT}-cfg
             mountPath: /etc/open5gs/${COMPONENT}.yaml
             subPath: ${COMPONENT}.yaml
           - name: ${COMPONENT}-cfg
@@ -76,6 +84,6 @@ spec:
         configMap:
           name: $COMPONENT
       - name: tls
-        secret: 
+        secret:
           secretName: $COMPONENT
           optional: true

@@ -12,7 +12,7 @@ data:
         pfcp:
           - dev: eth0
         gtpu:
-          - dev: eth0
+          - dev: net1
         subnet:
           - addr: 45.45.0.0/16
             dev: ogstun

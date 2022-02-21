@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: amf
-  namespace: $NS
+  namespace: open5gs-core
   labels:
     app.kubernetes.io/part-of: open5gs
 data:
@@ -19,7 +19,7 @@ data:
         - dev: eth0
           port: 7777
       ngap:
-        - dev: eth0
+        - dev: net1
       guami:
         - plmn_id:
             mcc: 001

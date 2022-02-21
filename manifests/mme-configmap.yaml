@@ -137,7 +137,7 @@ data:
     No_TLS; };\n\n\n##############################################################\n"
   mme.yaml: "logger:\n    file: /var/log/open5gs/mme.log\n    level: trace\n\nparameter:\n
     \   no_ipv6: true\n\nmme:\n    freeDiameter: /etc/freeDiameter/mme.conf\n    s1ap:\n
-    \     addr: 0.0.0.0\n    gtpc:\n      addr: 0.0.0.0\n    gummei: \n      plmn_id:\n
+    \     dev: net1\n    gtpc:\n      dev: eth0\n    gummei: \n      plmn_id:\n
     \       mcc: 001\n        mnc: 01\n      mme_gid: 2\n      mme_code: 1\n    tai:\n
     \     plmn_id:\n        mcc: 001\n        mnc: 01\n      tac: 12345\n    security:\n
     \       integrity_order : [ EIA1, EIA2, EIA0 ]\n        ciphering_order : [ EEA0,
