@@ -13,8 +13,8 @@ VERSION=2.3.2
   oc project "$OPEN5GS_CORE_NS"
 #fi
 
-oc create sa open5gs -n $OPEN5GS_CORE_NS
-oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
+#oc create sa open5gs -n $OPEN5GS_CORE_NS
+#oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
 
 oc delete configmap --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
 oc delete deployments --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
@@ -82,34 +82,34 @@ function cw() {
 }
 
 #Provision Config Maps
-c amf $OPEN5GS_CORE_NS 
-c nrf $OPEN5GS_CORE_NS 
+c amf $OPEN5GS_CORE_NS
+c nrf $OPEN5GS_CORE_NS
 c ausf $OPEN5GS_CORE_NS
-c udm $OPEN5GS_CORE_NS 
-c nssf $OPEN5GS_CORE_NS 
+c udm $OPEN5GS_CORE_NS
+c nssf $OPEN5GS_CORE_NS
 c upf $OPEN5GS_CORE_NS
 c wraprouting $OPEN5GS_CORE_NS
-c sgwc $OPEN5GS_CORE_NS 
-c sgwu $OPEN5GS_CORE_NS 
-c udr $OPEN5GS_CORE_NS 
-c bsf $OPEN5GS_CORE_NS 
-c hss $OPEN5GS_CORE_NS 
-c mme $OPEN5GS_CORE_NS 
-c pcrf $OPEN5GS_CORE_NS 
-c pcf $OPEN5GS_CORE_NS 
+c sgwc $OPEN5GS_CORE_NS
+c sgwu $OPEN5GS_CORE_NS
+c udr $OPEN5GS_CORE_NS
+c bsf $OPEN5GS_CORE_NS
+c hss $OPEN5GS_CORE_NS
+c mme $OPEN5GS_CORE_NS
+c pcrf $OPEN5GS_CORE_NS
+c pcf $OPEN5GS_CORE_NS
 
 #Provision Deployment objects
-d sgwu $OPEN5GS_CORE_NS " " "0"
+d sgwu $OPEN5GS_CORE_NS "s1ubh" "1"
 d sgwc $OPEN5GS_CORE_NS " " "0"
-du upf $OPEN5GS_CORE_NS "n3-bh" "1"
+du upf $OPEN5GS_CORE_NS "n3bh" "1"
 d nrf $OPEN5GS_CORE_NS " " "0"
-d amf $OPEN5GS_CORE_NS "n2-bh" "1"
+d amf $OPEN5GS_CORE_NS "n2bh" "1"
 d ausf $OPEN5GS_CORE_NS " " "0"
 d udm $OPEN5GS_CORE_NS " " "0"
 d udr $OPEN5GS_CORE_NS " " "0"
 d bsf $OPEN5GS_CORE_NS " " "0"
 d hss $OPEN5GS_CORE_NS " " "0"
-d mme $OPEN5GS_CORE_NS " " "0"
+d mme $OPEN5GS_CORE_NS "s1cbh" "1"
 d nssf $OPEN5GS_CORE_NS " " "0"
 d pcf $OPEN5GS_CORE_NS " " "0"
 d pcrf $OPEN5GS_CORE_NS " " "0"
