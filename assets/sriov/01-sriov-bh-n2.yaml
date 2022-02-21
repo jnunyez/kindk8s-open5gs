@@ -7,7 +7,7 @@
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetwork
 metadata:
-  name: n2-bh
+  name: n2bh
   namespace: openshift-sriov-network-operator
 spec:
   resourceName: core_sriov_netdevice
@@ -18,7 +18,7 @@ spec:
       "type": "static",
       "addresses": [
         {
-          "address": "10.28.3.2/24"  
+          "address": "10.28.3.2/24"
         }
       ]
     }
