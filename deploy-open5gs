@@ -102,7 +102,7 @@ c pcf $OPEN5GS_CORE_NS
 #Provision Deployment objects
 d sgwu $OPEN5GS_CORE_NS "s1ubh" "1"
 d sgwc $OPEN5GS_CORE_NS " " "0"
-du upf $OPEN5GS_CORE_NS "n3bh" "n6-wan" "2"
+du upf $OPEN5GS_CORE_NS "n3bh" "n6wan" "2"
 d nrf $OPEN5GS_CORE_NS " " "0"
 d amf $OPEN5GS_CORE_NS "n2bh" "1"
 d ausf $OPEN5GS_CORE_NS " " "0"

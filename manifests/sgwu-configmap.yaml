@@ -6,7 +6,7 @@ data:
 
     sgwu:
         gtpu:
-           dev: eth0
+           dev: net1
         pfcp:
            dev: eth0
 kind: ConfigMap
