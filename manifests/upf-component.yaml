@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  annotations:
-    k8s.v1.cni.cnf.io/networks: $NET
   name: $COMPONENT
   labels:
     app.kubernetes.io/name: $COMPONENT
@@ -30,7 +28,7 @@ spec:
         app.kubernetes.io/part-of: open5gs
         app.kubernetes.io/managed-by: open5gs
       annotations:
-        k8s.v1.cni.cncf.io/networks: n3bh
+        k8s.v1.cni.cncf.io/networks: ${N4},${N6}
     spec:
       hostname: ${COMPONENT}-1
       subdomain: open5gs
@@ -51,9 +49,9 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           requests:
-            openshift.io/core_sriov_netdevice: '1'
+            openshift.io/core_sriov_netdevice: '2'
           limits:
-            openshift.io/core_sriov_netdevice: '1'
+            openshift.io/core_sriov_netdevice: '2'
         command: ["/scripts/wraprouting"]
         volumeMounts:
           - name: ${COMPONENT}-cfg

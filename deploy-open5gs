@@ -13,8 +13,8 @@ VERSION=2.3.2
   oc project "$OPEN5GS_CORE_NS"
 #fi
 
-#oc create sa open5gs -n $OPEN5GS_CORE_NS
-#oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
+oc create sa open5gs -n $OPEN5GS_CORE_NS
+oc adm policy add-scc-to-user privileged -z open5gs -n "$OPEN5GS_CORE_NS"
 
 oc delete configmap --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
 oc delete deployments --selector=app.kubernetes.io/part-of=open5gs -n $OPEN5GS_CORE_NS --ignore-not-found=true
@@ -43,8 +43,9 @@ function du() {
     COMPONENT=$1 \
     IMAGE="quay.io/jnunez/open5gs:${VERSION}" \
     NS=$2 \
-    NET=$3 \
-    NICS=$4 \
+    N4=$3 \
+    N6=$4 \
+    NICS=$5 \
     envsubst < "$HERE/manifests/$1-component.yaml" |
     oc apply -f -
 }
@@ -101,7 +102,7 @@ c pcf $OPEN5GS_CORE_NS
 #Provision Deployment objects
 d sgwu $OPEN5GS_CORE_NS "s1ubh" "1"
 d sgwc $OPEN5GS_CORE_NS " " "0"
-du upf $OPEN5GS_CORE_NS "n3bh" "1"
+du upf $OPEN5GS_CORE_NS "n3bh" "n6-wan" "2"
 d nrf $OPEN5GS_CORE_NS " " "0"
 d amf $OPEN5GS_CORE_NS "n2bh" "1"
 d ausf $OPEN5GS_CORE_NS " " "0"
