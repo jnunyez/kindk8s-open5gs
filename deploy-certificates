@@ -27,7 +27,7 @@ if [ "$1" == -c ]; then
     oc delete secrets mme -n $OPEN5GS_CORE_NS --ignore-not-found=true
     oc delete secrets pcrf -n $OPEN5GS_CORE_NS --ignore-not-found=true
     oc delete secrets smf -n $OPEN5GS_CORE_NS --ignore-not-found=true
-    oc delete ns $OPEN5GS_CORE_NS
+    #oc delete ns $OPEN5GS_CORE_NS
 fi
 
 #m 'deploying issuer...'

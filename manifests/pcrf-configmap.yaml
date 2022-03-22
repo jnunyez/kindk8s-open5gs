@@ -145,7 +145,6 @@ data:
             diameter: 1
 
     parameter:
-        no_ipv6: true
 
     pcrf:
         freeDiameter: /etc/freeDiameter/pcrf.conf

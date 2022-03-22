@@ -12,7 +12,7 @@ data:
       level: debug
 
     parameter:
-      no_ipv6: true
+      no_ipv6: false
 
     amf:
       sbi:

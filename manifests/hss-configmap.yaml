@@ -151,29 +151,4 @@ metadata:
   namespace: $NS
   labels:
     app.kubernetes.io/part-of: open5gs
-    name: hss
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:hss.conf: {}
-        f:hss.yaml: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/part-of: {}
-          f:name: {}
-    manager: kubectl-label
-    operation: Update
-    time: "2021-07-05T14:24:02Z"
   name: hss
-  resourceVersion: "746292"
-  uid: defbf7bc-4950-411d-b727-1cdb85ec9abc

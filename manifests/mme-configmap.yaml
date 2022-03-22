@@ -135,8 +135,8 @@ data:
     = \"aaa.wide.ad.jp\";\n#ConnectPeer = \"old.diameter.serv\" { TcTimer = 60; TLS_old_method;
     No_SCTP; Port=3868; } ;\nConnectPeer = \"hss.localdomain\" { ConnectTo = \"hss\";
     No_TLS; };\n\n\n##############################################################\n"
-  mme.yaml: "logger:\n    file: /var/log/open5gs/mme.log\n    level: trace\n\nparameter:\n
-    \   no_ipv6: true\n\nmme:\n    freeDiameter: /etc/freeDiameter/mme.conf\n    s1ap:\n
+  mme.yaml: "logger:\n    file: /var/log/open5gs/mme.log\n    level: trace\n\n mme:\n    
+    \     freeDiameter: /etc/freeDiameter/mme.conf\n    s1ap:\n
     \     dev: net1\n    gtpc:\n      dev: eth0\n    gummei: \n      plmn_id:\n
     \       mcc: 001\n        mnc: 01\n      mme_gid: 2\n      mme_code: 1\n    tai:\n
     \     plmn_id:\n        mcc: 001\n        mnc: 01\n      tac: 12345\n    security:\n

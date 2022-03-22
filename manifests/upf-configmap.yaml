@@ -6,7 +6,6 @@ data:
         level: debug
 
     parameter:
-        no_ipv6: true
 
     upf:
         pfcp:
