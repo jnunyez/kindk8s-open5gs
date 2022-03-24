@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: open5gs-core
+generatorOptions:
+  labels:
+    app.kubernetes.io/part-of: open5gs
+    name: mme
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: mme
+  files:
+    - mme.conf
+    - mme.yaml

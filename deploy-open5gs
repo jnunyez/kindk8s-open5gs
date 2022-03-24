@@ -94,8 +94,13 @@ c sgwc $OPEN5GS_CORE_NS
 c sgwu $OPEN5GS_CORE_NS
 c udr $OPEN5GS_CORE_NS
 c bsf $OPEN5GS_CORE_NS
-c hss $OPEN5GS_CORE_NS
-c mme $OPEN5GS_CORE_NS
+#c hss $OPEN5GS_CORE_NS
+#c mme $OPEN5GS_CORE_NS
+# create and provision configmap from config files
+MONGODB_URI=$(oc get mongodbcommunity open5gs-mongodb -n $OPEN5GS_MONGO_NS --output=jsonpath={.status.mongoUri})
+MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
+kustomize build config/hss | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
+kustomize build config/mme | oc apply -f -
 c pcrf $OPEN5GS_CORE_NS
 c pcf $OPEN5GS_CORE_NS
 

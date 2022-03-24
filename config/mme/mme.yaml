@@ -3,14 +3,14 @@ logger:
     level: trace
 
 parameter:
-    no_ipv6: true
+    no_ipv6: false
 
 mme:
     freeDiameter: /etc/freeDiameter/mme.conf
     s1ap:
-      addr: 172.30.1.5
+      dev: net1
     gtpc:
-      addr: 172.30.1.5
+      dev: eth0
     gummei: 
       plmn_id:
         mcc: 001
@@ -31,8 +31,8 @@ mme:
 
 sgwc:
     gtpc:
-      addr: 172.30.1.6
+      name: sgwc
 
 smf:
     gtpc:
-      addr: 172.30.1.8
+      name: smf
