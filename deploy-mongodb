@@ -21,7 +21,11 @@ fi
 oc project "$OPEN5GS_MONGO_NS"
 oc apply --filename="$BASE/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml"
 oc apply --kustomize="$BASE/config/rbac/"
-oc apply --filename="$HERE/manifests/operator_openshift.yaml"
+#root privileges for mongo agent
+oc adm policy add-scc-to-user privileged -z mongodb-database -n "$OPEN5GS_MONGO_NS"
+
+#oc apply --filename="$HERE/manifests/operator_openshift.yaml"
+oc apply --filename="$BASE/deploy/openshift/operator_openshift.yaml"
 oc wait deployments/mongodb-kubernetes-operator --for=condition=Available
 POD=$(oc get pods --selector=name=mongodb-kubernetes-operator --output=jsonpath="{.items[0].metadata.name}")
 oc wait "pods/$POD" --for=condition=ContainersReady

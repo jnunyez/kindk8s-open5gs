@@ -19,3 +19,5 @@ oc wait pods --selector=app=open5gs-mongodb-svc --for=delete || true
 oc delete persistentvolumeclaims --selector=app=open5gs-mongodb-svc --ignore-not-found=true
 oc wait persistentvolumeclaims --selector=app=open5gs-mongodb-svc --for=delete || true
 oc delete persistentvolume --selector=app.kubernetes.io/part-of=open5gs --ignore-not-found=true
+oc delete deployment mongodb-kubernetes-operator --ignore-not-found=true
+oc adm policy remove-scc-from-user privileged -z mongodb-database -n mongodb
