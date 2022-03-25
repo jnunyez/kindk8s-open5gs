@@ -9,7 +9,7 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
 ## Quickstart
 
 
-1. Deploy mongodb community operator. A mongodb cluster with three replicas that will act as backend for the open5gs core network.
+1. Deploy [mongodb community operator](https://github.com/mongodb/mongodb-kubernetes-operator). A mongodb cluster with three replicas that will act as backend for the open5gs core network. Currently, we use a privileged service account to mount as root some persistent volumes via nfs in mongodb-agents.
 
    ```console
    deploy-mongodb
@@ -21,14 +21,31 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
    deploy-certificates
    ``` 
 
-3. Deploy open5gs components.
+3. Deploy open5gs components. 
 
    ```console
    deploy-open5gs
    ```
 
+4. Uninstall open5gs components. Note that this does not uninstall mongodb operator. 
+
+   ```console
+   destroy-open5gs
+   ```
+
+5. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
+   
+   ```console
+   destroy-mongodb
+   ```
 
 ## Deployment Strategy
+
+### Component Configuration
+
+* We use Kustomize configMapGenerator to generate ConfigMap from files for each Open5gs component. The configmaps generated will be consumed by each of the deployment associated to every open5gs component (i.e., Config Data--->Kustomize-->Configmaps). 
+
+* The data stored in the configmaps populate Volume objects inside the different deployments for every open5gs component. Every open5gs component will create one pod composed by one container.
 
 
 ### Certificates and Diameter
