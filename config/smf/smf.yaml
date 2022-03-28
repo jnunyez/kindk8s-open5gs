@@ -4,20 +4,19 @@ logger:
 parameter:
 
 smf:
-    freeDiameter: /open5gs/install/etc/freeDiameter/smf.conf
+    freeDiameter: /etc/freeDiameter/smf.conf
     sbi:
-      - addr: 172.30.1.14
+      - dev: eth0
         port: 7777
     gtpc:
-      - addr: 172.30.1.14
+      - addr: 0.0.0.0
     gtpu:
-      - addr: 172.30.1.14
+      - addr: 0.0.0.0
     pfcp:
-      - addr: 172.30.1.14
+      - addr: 0.0.0.0
     subnet:
       - addr: 45.45.0.1/24
         dnn: internet
-        dev: ogstun
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -25,10 +24,8 @@ smf:
 
 nrf:
     sbi:
-      - addr:
-          - 172.30.1.13
+      - name: nrf
         port: 7777
-
 upf:
     pfcp:
-      - addr: 172.30.1.8
+      - addr: $UPFIP

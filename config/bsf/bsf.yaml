@@ -1,15 +1,13 @@
 db_uri: $MONGODB_URI
-
 logger:
-    file: /var/log/open5gs/udr.log
+    file: /var/log/open5gs/bsf.log
 
 parameter:
 
-udr:
-    sbi:
-      - dev: eth0
-        port: 7777
-
+bsf:
+  sbi:
+    - dev: eth0
+      port: 7777
 nrf:
     sbi:
       - name: nrf

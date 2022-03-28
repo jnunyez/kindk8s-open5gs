@@ -1,4 +1,4 @@
-db_uri: mongodb://172.30.1.12/open5gs
+db_uri: $MONGODB_URI
 
 logger:
     file: /var/log/open5gs/pcf.log
@@ -7,11 +7,10 @@ parameter:
 
 pcf:
     sbi:
-      - addr: 172.30.1.15
+      - dev: eth0
         port: 7777
 
 nrf:
     sbi:
-      - addr:
-          - 172.30.1.17
+      - name: nrf
         port: 7777

@@ -5,15 +5,14 @@ parameter:
 
 nssf:
     sbi:
-      - addr: 172.30.1.16
+      - dev: eth0
         port: 7777
     nsi:
-      - addr: 172.30.1.17
+      - name: nrf
         port: 7777
         s_nssai:
           sst: 1
 nrf:
     sbi:
-      - addr:
-          - 172.30.1.17
+      - name: nrf
         port: 7777

@@ -83,26 +83,42 @@ function cw() {
 }
 
 #Provision Config Maps
-c amf $OPEN5GS_CORE_NS
-c nrf $OPEN5GS_CORE_NS
-c ausf $OPEN5GS_CORE_NS
-c udm $OPEN5GS_CORE_NS
-c nssf $OPEN5GS_CORE_NS
-c upf $OPEN5GS_CORE_NS
-c wraprouting $OPEN5GS_CORE_NS
-c sgwc $OPEN5GS_CORE_NS
-c sgwu $OPEN5GS_CORE_NS
-c udr $OPEN5GS_CORE_NS
-c bsf $OPEN5GS_CORE_NS
+
+MONGODB_URI=$(oc get mongodbcommunity open5gs-mongodb -n $OPEN5GS_MONGO_NS --output=jsonpath={.status.mongoUri})
+MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
+#c amf $OPEN5GS_CORE_NS
+#c nrf $OPEN5GS_CORE_NS
+kustomize build config/amf | oc apply -f -
+kustomize build config/nrf | oc apply -f -
+kustomize build config/ausf | oc apply -f -
+kustomize build config/udm | oc apply -f -
+kustomize build config/nssf | oc apply -f -
+kustomize build config/upf | oc apply -f -
+kustomize build config/wraproute | oc apply -f -
+#oc wraprouting $OPEN5GS_CORE_NS
+kustomize build config/sgwc | oc apply -f -
+kustomize build config/sgwc | oc apply -f -
+kustomize build config/sgwu | oc apply -f -
+kustomize build config/udr | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
+kustomize build config/bsf | oc apply -f -
+#c ausf $OPEN5GS_CORE_NS
+#c udm $OPEN5GS_CORE_NS
+#c nssf $OPEN5GS_CORE_NS
+#c upf $OPEN5GS_CORE_NS
+#c wraprouting $OPEN5GS_CORE_NS
+#c sgwc $OPEN5GS_CORE_NS
+#c sgwu $OPEN5GS_CORE_NS
+#c udr $OPEN5GS_CORE_NS
+#c bsf $OPEN5GS_CORE_NS
 #c hss $OPEN5GS_CORE_NS
 #c mme $OPEN5GS_CORE_NS
 # create and provision configmap from config files
-MONGODB_URI=$(oc get mongodbcommunity open5gs-mongodb -n $OPEN5GS_MONGO_NS --output=jsonpath={.status.mongoUri})
-MONGODB_URI=mongodb://user:password@${MONGODB_URI:10}/open5gs?authSource=admin
 kustomize build config/hss | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
 kustomize build config/mme | oc apply -f -
-c pcrf $OPEN5GS_CORE_NS
-c pcf $OPEN5GS_CORE_NS
+kustomize build config/pcrf | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
+kustomize build config/pcf | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
+#c pcrf $OPEN5GS_CORE_NS
+#c pcf $OPEN5GS_CORE_NS
 
 #Provision Deployment objects
 d sgwu $OPEN5GS_CORE_NS "s1ubh" "1"
@@ -128,5 +144,6 @@ envsubst < "$HERE/manifests/smf-configmap.yaml" |
 oc create -f -
 d smf $OPEN5GS_CORE_NS
 
-cw webui $OPEN5GS_CORE_NS
+#cw webui $OPEN5GS_CORE_NS
+kustomize build config/webui | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
 dw webui $OPEN5GS_CORE_NS

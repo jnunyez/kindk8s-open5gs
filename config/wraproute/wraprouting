@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -euo pipefail
+
+echo "Do upf routing initialization then run open5gs entrypoint"
+ 
+dnf -y install iproute \
+iptables
+
+ip tuntap add name ogstun mode tun;
+ip addr add 45.45.0.10/16 dev ogstun;
+ip link set ogstun mtu 1450;
+ip link set ogstun up;
+sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward";
+
+iptables -t nat -A POSTROUTING -s 45.45.0.0/16 ! -o ogstun -j MASQUERADE;
+iptables -A INPUT -i ogstun -j ACCEPT;
+
+exec /bin/open5gs

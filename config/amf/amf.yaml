@@ -1,15 +1,15 @@
 logger:
     file: /var/log/open5gs/amf.log
+    level: debug
 
 parameter:
-    no_ipv6: true
 
 amf:
     sbi:
-      - addr: 172.30.1.21
+      - dev: eth0
         port: 7777
     ngap:
-      - addr: 172.30.1.21
+      - dev: net1
     guami:
       - plmn_id:
           mcc: 001
@@ -34,9 +34,7 @@ amf:
     network_name:
         full: Open5GS
     amf_name: open5GS-amf0
-
 nrf:
     sbi:
-      - addr:
-          - 172.30.1.17
+      - name: nrf
         port: 7777

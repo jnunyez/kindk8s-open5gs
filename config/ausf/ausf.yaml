@@ -5,11 +5,9 @@ parameter:
 
 ausf:
     sbi:
-      - addr: 172.30.1.14
+      - dev: eth0
         port: 7777
-
 nrf:
     sbi:
-      - addr:
-          - 172.30.1.13
+      - name: nrf
         port: 7777

@@ -1,19 +1,14 @@
 logger:
     file: /var/log/open5gs/sgwc.log
-    trace:
-        app: 1
-        gtpv2: 1
-        gtp: 1
 
 parameter:
-    no_ipv6: true
 
 sgwc:
     gtpc:
-      - addr: 172.30.1.6 
+      - dev: eth0 
     pfcp:
-      - addr: 172.30.1.6
+      - dev: eth0
       
 sgwu:
     pfcp:
-      - addr: 172.30.1.7
+      - name: sgwu
