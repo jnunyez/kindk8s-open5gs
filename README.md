@@ -43,10 +43,18 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
 
 ### Component Configuration
 
-* We use Kustomize configMapGenerator to generate ConfigMap from files for each Open5gs component. The configmaps generated will be consumed by each of the deployment associated to every open5gs component (i.e., Config Data--->Kustomize-->Configmaps). 
+* We use Kustomize configMapGenerator to generate ConfigMap from files for each Open5gs component. The configmaps generated will be consumed by each of the deployment associated to every open5gs component (i.e., Config Data--->Kustomize-->Configmaps). The example below generated the configmap for the SGWU component:
 
-* The data stored in the configmaps populate Volume objects inside the different deployments for every open5gs component. Every open5gs component will create one pod composed by one container.
+	```console
+	kustomize build config/sgwu | oc apply -f -
+	```
 
+* The data stored in the configmaps populates Volume objects for every open5gs component to deploy. Every open5gs component will create one pod composed by one container.
+
+* Dependencies amongst the different open5gs components are currently handled on a synchronous wait (i.e., using `wait --for=condition`). 
+	* The configmap for the SMF requires of the IP allocated to the UPF.
+
+* UPF routing for uplink and downlink is initialized at UPF pod startup by the script configmap `wraprouting`, which is injected as a volume in UPF deployment.
 
 ### Certificates and Diameter
 
