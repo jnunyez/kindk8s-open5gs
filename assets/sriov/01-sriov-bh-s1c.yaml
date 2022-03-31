@@ -18,7 +18,10 @@ spec:
       "type": "static",
       "addresses": [
         {
-          "address": "10.27.3.2/24"
+          "address": "10.27.3.8/24"
+        },
+        {
+          "address": "fd00:6:6:803::8/64"
         }
       ]
     }
