@@ -1,0 +1,13 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # SRIOV Configs
+  - 00-sriov-node-policy.yaml
+  - 01-sriov-bh-n2.yaml
+  - 01-sriov-bh-n3.yaml
+  - 01-sriov-bh-s1c.yaml
+  - 01-sriov-bh-s1u.yaml
+  - 01-sriov-wan-n6.yaml
+  
