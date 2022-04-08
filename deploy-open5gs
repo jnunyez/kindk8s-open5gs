@@ -97,7 +97,6 @@ kustomize build config/upf | oc apply -f -
 kustomize build config/wraproute | oc apply -f -
 #oc wraprouting $OPEN5GS_CORE_NS
 kustomize build config/sgwc | oc apply -f -
-kustomize build config/sgwc | oc apply -f -
 kustomize build config/sgwu | oc apply -f -
 kustomize build config/udr | MONGODB_URI=$MONGODB_URI envsubst | oc apply -f -
 kustomize build config/bsf | oc apply -f -
