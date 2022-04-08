@@ -1,7 +1,7 @@
 ---
 ###############################################################################
 # SR-IOV Network Definition for the NS of the workload
-#  s1c-bh + vlan 803 + core_sriov_netdevice
+#  s1c-bh + vlan 905 + core_sriov_netdevice
 ###############################################################################
 # NS = open5gs-core
 apiVersion: sriovnetwork.openshift.io/v1
@@ -22,7 +22,7 @@ spec:
           "gateway": "10.28.5.1"
         },
         {
-          "address": "fd00:6:6:905::8/64"
+          "address": "fd00:6:6:905::8/64",
           "gateway": "fd00:6:6:905::1"
         }
       ]

@@ -4,11 +4,11 @@ logger:
 parameter:
 
 sgwc:
-    gtpc:
-      - dev: eth0 
-    pfcp:
-      - dev: eth0
+  gtpc:
+    dev: eth0 
+  pfcp:
+    dev: eth0
       
 sgwu:
-    pfcp:
-      - name: sgwu
+  pfcp:
+    name: sgwu
