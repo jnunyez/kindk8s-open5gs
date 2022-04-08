@@ -21,19 +21,25 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
    deploy-certificates
    ``` 
 
-3. Deploy open5gs components. 
+3. Deploy sriov network attachments for the 4G/5G core interfaces using sriov network operator.
+
+   ```console
+   kustomize build sriov
+   ```
+
+4. Deploy open5gs components. 
 
    ```console
    deploy-open5gs
    ```
 
-4. Uninstall open5gs components. Note that this does not uninstall mongodb operator. 
+5. Uninstall open5gs components. Note that this does not uninstall mongodb operator. 
 
    ```console
    destroy-open5gs
    ```
 
-5. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
+6. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
    
    ```console
    destroy-mongodb
