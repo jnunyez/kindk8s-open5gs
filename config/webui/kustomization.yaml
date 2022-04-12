@@ -4,7 +4,7 @@ namespace: open5gs-core
 generatorOptions:
   labels:
     app.kubernetes.io/part-of: open5gs
-    name: mme
+    name: webui
   disableNameSuffixHash: true
 configMapGenerator:
 - name: webui
