@@ -137,10 +137,8 @@ d pcrf $OPEN5GS_CORE_NS " " "0"
 
 #wait for UPF to get allocated IP
 oc wait pods --selector=app.kubernetes.io/name=upf --for=condition=Ready
-UPFIP=$(oc get pods -l app.kubernetes.io/name=upf -o jsonpath="{.items[*].status.podIP}") \
-NS=$OPEN5GS_CORE_NS \
-envsubst < "$HERE/manifests/smf-configmap.yaml" |
-oc create -f -
+kustomize build config/smf | UPFIP=$(oc get pods -l app.kubernetes.io/name=upf -o jsonpath="{.items[*].status.podIP}") \
+NS=$OPEN5GS_CORE_NS envsubst | oc apply -f -
 d smf $OPEN5GS_CORE_NS
 
 #cw webui $OPEN5GS_CORE_NS
