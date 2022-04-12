@@ -5,7 +5,7 @@ Manifests and data examples to deploy open5gs in Red Hat OpenShift.
 ## Rationale
 
 This repo contains an example deployment of [open5gs](https://open5gs.org) in Red Hat OpenShift container platform. More info of this opensource 5GC can be found at [open5gs](https://open5gs.org)
-
+twi
 ## Quickstart
 
 
@@ -99,8 +99,6 @@ mongodb-kubernetes-operator-957dff59d-tgpgr   1/1     Running   0          82m
 nrf-776d87bb5d-2vj7p                          1/1     Running   0          41m
 nssf-67c5f6df78-x4lv5                         1/1     Running   3          41m
 open5gs-mongodb-0                             2/2     Running   0          82m
-open5gs-mongodb-1                             2/2     Running   0          80m
-open5gs-mongodb-2                             2/2     Running   0          79m
 pcf-7d749b98bf-884d5                          1/1     Running   3          41m
 pcrf-5dffd6c689-kmhdf                         1/1     Running   4          41m
 sgwc-74c9f94664-s64jt                         1/1     Running   3          41m
@@ -117,18 +115,12 @@ webui-d7797f598-b48jb                         1/1     Running   0          41m
 
 ### Webui
 
-The `webui` pod running inside the kubernetes cluster is used to register subscriber information. To expose this service externally we use a NodePort. 
+The `webui` pod running inside the kubernetes cluster is used to register subscriber information that is stored in mongo db. To expose this service externally we can use a NodePort. 
 
 ```console
-kubectl get svc webui-svc
+oc get svc webui-svc
 NAME        TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
 webui-svc   NodePort   10.96.59.136   <none>        3000:30030/TCP   2m 
 ```
 
-The service is accessible in cluster in port 30030. To remotely access the service exposed in the node port you can port forward to your localhost.
-
-```console
-ssh -L 3000:K8S_NODE_IP:30030 username@HOST_IP
-```
-
-You should be able to access the web service in your localhost at port 3000, e.g., `curl localhost:3000`.
+The service is accessible in worker nodes in port 30030. You should be able to access the web service in your localhost at port 3000, e.g., `curl IP_WORKER:30030`.
