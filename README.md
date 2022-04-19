@@ -5,7 +5,7 @@ Manifests and data examples to deploy open5gs in Red Hat OpenShift.
 ## Rationale
 
 This repo contains an example deployment of [open5gs](https://open5gs.org) in Red Hat OpenShift container platform. More info of this opensource 5GC can be found at [open5gs](https://open5gs.org)
-twi
+
 ## Quickstart
 
 
@@ -24,7 +24,7 @@ twi
 3. Deploy sriov network attachments for the 4G/5G core interfaces using sriov network operator.
 
    ```console
-   kustomize build sriov
+   kustomize build sriov | oc apply -f -
    ```
 
 4. Deploy open5gs components. 
