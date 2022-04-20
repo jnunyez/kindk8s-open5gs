@@ -21,7 +21,7 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
    deploy-certificates
    ``` 
 
-3. Deploy sriov network attachments for the 4G/5G core interfaces using sriov network operator.
+3. Deploy sriov network node policy and networks for the 4G/5G core interfaces using sriov network operator.
 
    ```console
    kustomize build sriov | oc apply -f -
@@ -39,7 +39,13 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
    destroy-open5gs
    ```
 
-6. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
+6. Destroy sriov network policy and sriov networks
+
+   ```console
+   kustomize build sriov | oc delete -f -
+   ```
+
+7. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
    
    ```console
    destroy-mongodb
@@ -47,7 +53,15 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
 
 ## Deployment Strategy
 
+### SRIOV Networks
+
+* One SRIOV Network Node policy in Intel SRIOV-capable XXV710 NIC.
+
+* Five SRIOV networks are created (N2, N3, N6, S1U and S1C).
+
 ### Component Configuration
+
+* All microservices running in one node
 
 * We use Kustomize configMapGenerator to generate ConfigMap from files for each Open5gs component. The configmaps generated will be consumed by each of the deployment associated to every open5gs component (i.e., Config Data--->Kustomize-->Configmaps). The example below generated the configmap for the SGWU component:
 
