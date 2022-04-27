@@ -12,7 +12,7 @@ metadata:
 spec:
   resourceName: core_sriov_netdevice
   networkNamespace: open5gs-core
-  vlan: 901
+  vlan: 821
   ipam: |-
     {
       "type": "static",
@@ -22,8 +22,8 @@ spec:
           "gateway": "10.28.1.1"
         },
         {
-          "address": "fd00:6:6:901::8/64",
-          "gateway": "fd00:6:6:901::1"
+          "address": "fd00:6:6:821::8/64",
+          "gateway": "fd00:6:6:821::1"
         }
       ]
     }
