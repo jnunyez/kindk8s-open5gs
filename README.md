@@ -42,7 +42,7 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
 6. Destroy sriov network policy and sriov networks
 
    ```console
-   kustomize build sriov | oc delete -f -
+   kustomize build assets/sriov | oc delete -f -
    ```
 
 7. Uninstall mongodb operator and database replicas. The command below will uninstall mongodb community operator and mongo DBs. The command below needs to be executed after the open5gs components have been uninstalled with the command in previou step.
@@ -50,6 +50,13 @@ This repo contains an example deployment of [open5gs](https://open5gs.org) in Re
    ```console
    destroy-mongodb
    ```
+
+8. Delete ns
+
+  ```console
+  oc delete ns mongodb
+  oc delete ns open5gs-core
+  ```
 
 ## Deployment Strategy
 
